@@ -9,7 +9,6 @@ public class MainFrame extends JFrame {
         Menu menuItem = new Menu();
         JMenuBar getMenu = menuItem.createMenu();
 
-
         //  Ustawienie tytułu okna
         setTitle(APP_NAME);
 
@@ -43,6 +42,7 @@ public class MainFrame extends JFrame {
 
 
         JLabel insertNumberLabel = new JLabel("Wprowadz Tekst");
+        insertNumberLabel.setBounds(10,10,220,20);
         insertNumberLabel.add(new JTextField());
 
         JTextField insertNumber = new JTextField();
@@ -53,16 +53,33 @@ public class MainFrame extends JFrame {
         topTextPanel.add(insertNumberLabel);
         topTextPanel.add( new JLabel("Numer wiersza"));
         topTextPanel.add( new JLabel("Numer kolumny"));
-        topTextPanel.add( new JLabel("Numer wiersza"));
 
         JTable myTable = frame.Table5x5();
 
         topTextPanel.add(myTable);
 
+        //  PRXYCISKI
+
+        JPanel buttonPanel = new JPanel(new GridLayout(4,2));
+
+        JButton addBtn = new JButton("Dodaj");
+        JButton zeroBtn = new JButton("Wyzeruj");
+        JButton insertBtn = new JButton("Wypełnij");
+        JButton saveBtn = new JButton("Zapisz");
+
+        buttonPanel.add(addBtn);
+        buttonPanel.add(zeroBtn);
+        buttonPanel.add(insertBtn);
+        buttonPanel.add(saveBtn);
+
+        topTextPanel.add(buttonPanel);
+
+        
         JPanel centerPanel = new JPanel(new GridLayout(7, 2));
         centerPanel.setPreferredSize(new Dimension(800, 500));
 
         centerPanel.add(topTextPanel);
+
 
         JToolBar toolbarPanel = new Toolbar().getToolbar();
 
@@ -107,11 +124,11 @@ public class MainFrame extends JFrame {
 
         // Dane dla tabeli (możesz je zastąpić własnymi danymi)
         Object[][] data = {
-                {1, 2, 3, 4, 5},
-                {6, 7, 8, 9, 10},
-                {11, 12, 13, 14, 15},
-                {16, 17, 18, 19, 20},
-                {21, 22, 23, 24, 25}
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0}
         };
 
         // Nagłówki dla kolumn
@@ -121,7 +138,7 @@ public class MainFrame extends JFrame {
         JTable table = new JTable(data, columnHeaders);
 
         // Ustawiamy preferowany rozmiar tabeli (opcjonalne)
-        table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+        table.setPreferredScrollableViewportSize(new Dimension(500, 500));
 
 
 

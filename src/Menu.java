@@ -84,13 +84,8 @@ public class Menu extends JFrame  {
             }
         });
 
-        helpAboutApp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Menu menu = new Menu();
-                menu.showAboutDialog();
-            }
-        });
+
+        helpAboutApp.addActionListener(e -> new Menu().showAboutDialog());
     }
 
 

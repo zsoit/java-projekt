@@ -30,6 +30,8 @@ public class Toolbar extends JFrame {
 
         helpToolbar= this.setIcon("help");
         aboutToolbar= this.setIcon("about");
+
+        aboutToolbar.addActionListener(e -> new Menu().showAboutDialog());
     }
     public JToolBar getToolbar(){
 
