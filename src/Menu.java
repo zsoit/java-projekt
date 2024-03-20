@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JFrame  {
+
+    private final String AUTHOR = "Jakub Achtelik U-20019";
     private JMenuBar menuBar;
     private JMenu fileMenu, editMenu, viewMenu,calculationsMenu, helpMenu;
     private JMenuItem exitFileItem, saveFileItem, openFileItem;
@@ -101,7 +103,7 @@ public class Menu extends JFrame  {
         // Treść informacji o programie i autorze
         JTextArea aboutTextArea = new JTextArea();
         aboutTextArea.setEditable(false);
-        aboutTextArea.setText("Autor: Jakub Achtelik U-20019\nWersja: 1.0\n\nPK - Zadanie 1");
+        aboutTextArea.setText("Autor: " + AUTHOR + "\nPK - Zadanie 1");
         aboutDialog.add(aboutTextArea, BorderLayout.CENTER);
 
         // Przycisk do zamknięcia okna

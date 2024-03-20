@@ -2,9 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
-
     private final String APP_NAME = "PA - Zadanie 1 GUI";
-
     public MainFrame() {
 
         // menu, pobierz menu
@@ -16,7 +14,13 @@ public class MainFrame extends JFrame {
         setTitle(APP_NAME);
 
         // Ustawienia rozmiaru okna
-        setSize(400, 300);
+        setSize(900, 900);
+
+        setResizable(true);
+        setLocationRelativeTo(null);
+
+        // Ustawienie widoczności okna
+        setVisible(true);
 
         this.centerWindow();
         this.exitWindow();
@@ -26,21 +30,51 @@ public class MainFrame extends JFrame {
 
     }
 
-
     public static void main(String[] args) {
         // Utworzenie obiektu ramki głównej
         MainFrame frame = new MainFrame();
 
-        // Ustawienie widoczności okna
-        frame.setVisible(true);
+        JPanel mainPanel = new JPanel(new BorderLayout());
 
-        // dodanie toolbar
-        frame.add(frame.Toolbar());
+        // FOOTER PANEL
+        JPanel footerPanel = new JPanel(new GridLayout(1, 2));
+        footerPanel.add(new JLabel("Info Start Aplikacji"));
+        footerPanel.add(new JLabel("Status ON"));
+
+
+        JLabel insertNumberLabel = new JLabel("Wprowadz Tekst");
+        insertNumberLabel.add(new JTextField());
+
+        JTextField insertNumber = new JTextField();
+        insertNumber.setBounds(10,10,220,20);
+
+        JPanel topTextPanel = new JPanel(new GridLayout(2, 3));
+
+        topTextPanel.add(insertNumberLabel);
+        topTextPanel.add( new JLabel("Numer wiersza"));
+        topTextPanel.add( new JLabel("Numer kolumny"));
+        topTextPanel.add( new JLabel("Numer wiersza"));
+
+        JTable myTable = frame.Table5x5();
+
+        topTextPanel.add(myTable);
+
+        JPanel centerPanel = new JPanel(new GridLayout(7, 2));
+        centerPanel.setPreferredSize(new Dimension(800, 500));
+
+        centerPanel.add(topTextPanel);
+
+        JToolBar toolbarPanel = new Toolbar().getToolbar();
+
+        mainPanel.add(toolbarPanel, BorderLayout.NORTH);
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(footerPanel, BorderLayout.SOUTH);
+
+        frame.add(mainPanel);
         frame.pack();
-        frame.setVisible(true);
+
+
     }
-
-
 
     public void centerWindow(){
         // Pobranie rozmiaru ekranu
@@ -67,24 +101,30 @@ public class MainFrame extends JFrame {
         });
 
     }
+    public JTable Table5x5(){
+        JFrame frame = new JFrame("Tabela 5x5");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    public JToolBar Toolbar(){
-        JToolBar toolBar = new JToolBar();
-        toolBar.add(new JButton("Dodaj"));
-        toolBar.add(new JButton("Wyzeruj"));
-        toolBar.add(new JButton("Wypełnij"));
-        toolBar.addSeparator();
+        // Dane dla tabeli (możesz je zastąpić własnymi danymi)
+        Object[][] data = {
+                {1, 2, 3, 4, 5},
+                {6, 7, 8, 9, 10},
+                {11, 12, 13, 14, 15},
+                {16, 17, 18, 19, 20},
+                {21, 22, 23, 24, 25}
+        };
 
-        toolBar.add(new JButton("Suma"));
-        toolBar.add(new JButton("Średnia"));
-        toolBar.add(new JButton("Min"));
-        toolBar.add(new JButton("Max"));
-        toolBar.addSeparator();
+        // Nagłówki dla kolumn
+        String[] columnHeaders = {"1", "2", "3", "4", "5"};
 
-        toolBar.add(new JButton("Pomoc"));
-        toolBar.add(new JButton("O programie"));
+        // Tworzymy tabelę na podstawie danych i nagłówków
+        JTable table = new JTable(data, columnHeaders);
 
-        return toolBar;
+        // Ustawiamy preferowany rozmiar tabeli (opcjonalne)
+        table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+
+
+
+        return table;
     }
-
 }

@@ -2,24 +2,59 @@ import javax.swing.*;
 
 public class Toolbar extends JFrame {
 
-    private Toolbar toolBar;
-    private JButton addBtn, zeroBtn, insertBtn, sumBtn, avgBtn, minBtn, maxBtn, helpBtn, aboutBtn;
+    private JButton saveToolbar, aboutToolbar, printToolbar, openToolbar, addToolbar;
+    private JButton removeToolbar, musicToolbar;
+    private JButton sumToolbar, xToolbar, minToolbar, maxToolbar;
+    private JButton helpToolbar;
+    private JToolBar toolBar;
 
+    private JButton setIcon(String iconName){
+        return new JButton(new ImageIcon("grafika/" + iconName + ".jpg"));
+    }
+
+    public Toolbar(){
+        toolBar = new JToolBar();
+        saveToolbar = this.setIcon("save");
+        aboutToolbar = this.setIcon("about");
+        printToolbar = this.setIcon("print");
+        openToolbar = this.setIcon("open");
+        addToolbar = this.setIcon("add");
+
+        removeToolbar= this.setIcon("remove");
+        musicToolbar= this.setIcon("music");
+
+        sumToolbar= this.setIcon("sum");
+        xToolbar= this.setIcon("x");
+        minToolbar= this.setIcon("min");
+        maxToolbar= this.setIcon("max");
+
+        helpToolbar= this.setIcon("help");
+        aboutToolbar= this.setIcon("about");
+    }
     public JToolBar getToolbar(){
-        toolBar.add(new JButton("Dodaj"));
-        toolBar.add(new JButton("Wyzeruj"));
-        toolBar.add(new JButton("Wypełnij"));
-//        toolBar.addSeparator();
 
-        toolBar.add(new JButton("Suma"));
-        toolBar.add(new JButton("Średnia"));
-        toolBar.add(new JButton("Min"));
-        toolBar.add(new JButton("Max"));
-        //toolBar.addSeparator();
+        toolBar.add(saveToolbar);
+        toolBar.add(printToolbar);
+        toolBar.add(openToolbar);
 
-        toolBar.add(new JButton("Pomoc"));
-        toolBar.add(new JButton("O programie"));
+        toolBar.addSeparator();
 
-        return toolBar.getToolbar();
+        toolBar.add(addToolbar);
+        toolBar.add(removeToolbar);
+        toolBar.add(musicToolbar);
+
+        toolBar.addSeparator();
+
+        toolBar.add(sumToolbar);
+        toolBar.add(xToolbar);
+        toolBar.add(minToolbar);
+        toolBar.add(maxToolbar);
+
+        toolBar.addSeparator();
+
+        toolBar.add(helpToolbar);
+        toolBar.add(aboutToolbar);
+
+        return toolBar;
     }
 }
