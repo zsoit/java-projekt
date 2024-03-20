@@ -5,32 +5,42 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JFrame  {
+    private JMenuBar menuBar;
+    private JMenu fileMenu, editMenu, viewMenu,calculationsMenu, helpMenu;
+    private JMenuItem exitFileItem, saveFileItem, openFileItem;
+    private JMenuItem cutEditItem, copyEditItem, pasteEditItem;
+    private JMenuItem calculationsSum, calculationsAvg, calculationsMin, calculationsMax;
+    private  JMenuItem helpAboutApp, helpManual;
 
-    private JMenuBar menuBar = new JMenuBar();
-    private JMenu fileMenu = new JMenu("Plik");
-    private JMenu editMenu = new JMenu("Edycja");
-    private JMenu viewMenu = new JMenu("Widok");
-    private JMenu calculationsMenu = new JMenu("Obliczenia");
-    private JMenu helpMenu = new JMenu("Pomoc");
+    public Menu(){
 
-    private JMenuItem exitFileItem = new JMenuItem("Wyjście");
-    private JMenuItem saveFileItem = new JMenuItem("Zapisz");
-    private JMenuItem openFileItem = new JMenuItem("Otwórz");
+        menuBar = new JMenuBar();
 
-    private JMenuItem cutEditItem = new JMenuItem("Wytnij");
-    private JMenuItem copyEditItem = new JMenuItem("Kopiuj");
-    private JMenuItem pasteEditItem = new JMenuItem("Wklej");
+        fileMenu = new JMenu("Plik");
+        editMenu = new JMenu("Edycja");
+        viewMenu = new JMenu("Widok");
+        calculationsMenu = new JMenu("Obliczenia");
+        helpMenu = new JMenu("Pomoc");
 
-    private JMenuItem calculationsSum = new JMenuItem("Suma");
+        exitFileItem = new JMenuItem("Wyjście");
+        saveFileItem = new JMenuItem("Zapisz");
+        openFileItem = new JMenuItem("Otwórz");
 
-    private JMenuItem calculationsAvg = new JMenuItem("Średnia");
+        cutEditItem = new JMenuItem("Wytnij");
+        copyEditItem = new JMenuItem("Kopiuj");
+        pasteEditItem = new JMenuItem("Wklej");
 
-    private JMenuItem calculationsMin = new JMenuItem("Min");
+        calculationsSum = new JMenuItem("Suma");
+        calculationsAvg = new JMenuItem("Średnia");
+        calculationsMin = new JMenuItem("Min");
+        calculationsMax = new JMenuItem("Max");
 
-    private JMenuItem calculationsMax = new JMenuItem("Max");
+        helpAboutApp = new JMenuItem("O programie");
+        helpManual = new JMenuItem("Panel pomocy");
 
-    private JMenuItem helpAboutApp = new JMenuItem("O programie");
-    private JMenuItem helpManual = new JMenuItem("Panel pomocy");
+        this.Events();
+
+    }
 
 
     public JMenuBar createMenu(){

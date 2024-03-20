@@ -177,7 +177,17 @@ public class App implements ActionListener {
         skrollWpisywanejLiczby.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         myPanel.add(skrollWpisywanejLiczby);
 
-
+        myToolbar.add(przycisk_menu4 = new JButton("Dodaj"));
+        myToolbar.add(przycisk_menu5 = new JButton("Wyzeruj"));
+        myToolbar.add(przycisk_menu6 = new JButton("Wypełnij"));
+        myToolbar.addSeparator();
+        myToolbar.add(przycisk_menu7 = new JButton("Suma"));
+        myToolbar.add(przycisk_menu8 = new JButton("Średnia"));
+        myToolbar.add(przycisk_menu9 = new JButton("Min"));
+        myToolbar.add(przycisk_menu10 = new JButton("Max"));
+        myToolbar.addSeparator();
+        myToolbar.add(przycisk_menu11 = new JButton("Pomoc"));
+        myToolbar.add(przycisk_menu12 = new JButton("O programie"));
         wybrana_kolumna = new JLabel("Wybrana kolumna:");
         wybrana_kolumna.setBounds(270,10,220,20);
         myPanel.add(wybrana_kolumna);

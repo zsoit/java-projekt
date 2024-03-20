@@ -1,9 +1,46 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
+
+    private final String APP_NAME = "PA - Zadanie 1 GUI";
+
+    public MainFrame() {
+
+        // menu, pobierz menu
+        Menu menuItem = new Menu();
+        JMenuBar getMenu = menuItem.createMenu();
+
+
+        //  Ustawienie tytułu okna
+        setTitle(APP_NAME);
+
+        // Ustawienia rozmiaru okna
+        setSize(400, 300);
+
+        this.centerWindow();
+        this.exitWindow();
+
+        setJMenuBar(getMenu);
+
+
+    }
+
+
+    public static void main(String[] args) {
+        // Utworzenie obiektu ramki głównej
+        MainFrame frame = new MainFrame();
+
+        // Ustawienie widoczności okna
+        frame.setVisible(true);
+
+        // dodanie toolbar
+        frame.add(frame.Toolbar());
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+
 
     public void centerWindow(){
         // Pobranie rozmiaru ekranu
@@ -30,33 +67,24 @@ public class MainFrame extends JFrame {
         });
 
     }
-    public MainFrame() {
 
-        String APPNAME = "PA - Zadanie 1 GUI";
+    public JToolBar Toolbar(){
+        JToolBar toolBar = new JToolBar();
+        toolBar.add(new JButton("Dodaj"));
+        toolBar.add(new JButton("Wyzeruj"));
+        toolBar.add(new JButton("Wypełnij"));
+        toolBar.addSeparator();
 
-        // menu, pobierz menu
-        Menu menuItem = new Menu();
-        JMenuBar getMenu = menuItem.createMenu();
+        toolBar.add(new JButton("Suma"));
+        toolBar.add(new JButton("Średnia"));
+        toolBar.add(new JButton("Min"));
+        toolBar.add(new JButton("Max"));
+        toolBar.addSeparator();
 
-        //  Ustawienie tytułu okna
-        setTitle(APPNAME);
+        toolBar.add(new JButton("Pomoc"));
+        toolBar.add(new JButton("O programie"));
 
-        // Ustawienia rozmiaru okna
-        setSize(400, 300);
-
-        this.centerWindow();
-        this.exitWindow();
-
-        setJMenuBar(getMenu);
-        menuItem.Events();
-
+        return toolBar;
     }
 
-    public static void main(String[] args) {
-        // Utworzenie obiektu ramki głównej
-        MainFrame frame = new MainFrame();
-
-        // Ustawienie widoczności okna
-        frame.setVisible(true);
-    }
 }
