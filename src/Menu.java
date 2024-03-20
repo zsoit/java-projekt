@@ -10,24 +10,53 @@ public class Menu extends JFrame  {
     private JMenu fileMenu = new JMenu("Plik");
     private JMenu editMenu = new JMenu("Edycja");
     private JMenu viewMenu = new JMenu("Widok");
+    private JMenu calculationsMenu = new JMenu("Obliczenia");
     private JMenu helpMenu = new JMenu("Pomoc");
 
-    private JMenuItem exitMenuItem = new JMenuItem("Wyjście");
-    private JMenuItem saveMenuItem = new JMenuItem("Zapisz");
-    private JMenuItem aboutApp = new JMenuItem("O programie");
+    private JMenuItem exitFileItem = new JMenuItem("Wyjście");
+    private JMenuItem saveFileItem = new JMenuItem("Zapisz");
+    private JMenuItem openFileItem = new JMenuItem("Otwórz");
+
+    private JMenuItem cutEditItem = new JMenuItem("Wytnij");
+    private JMenuItem copyEditItem = new JMenuItem("Kopiuj");
+    private JMenuItem pasteEditItem = new JMenuItem("Wklej");
+
+    private JMenuItem calculationsSum = new JMenuItem("Suma");
+
+    private JMenuItem calculationsAvg = new JMenuItem("Średnia");
+
+    private JMenuItem calculationsMin = new JMenuItem("Min");
+
+    private JMenuItem calculationsMax = new JMenuItem("Max");
+
+    private JMenuItem helpAboutApp = new JMenuItem("O programie");
+    private JMenuItem helpManual = new JMenuItem("Panel pomocy");
+
 
     public JMenuBar createMenu(){
         // Menu
 
-        fileMenu.add(exitMenuItem);
-        fileMenu.add(saveMenuItem);
-        fileMenu.add(helpMenu);
+        fileMenu.add(openFileItem);
+        fileMenu.add(saveFileItem);
+        fileMenu.add(exitFileItem);
+        editMenu.add(cutEditItem);
+        editMenu.add(copyEditItem);
+        editMenu.add(pasteEditItem);
 
-        viewMenu.add(aboutApp);
+
+        calculationsMenu.add(calculationsSum);
+        calculationsMenu.add(calculationsAvg);
+        calculationsMenu.add(calculationsMin);
+        calculationsMenu.add(calculationsMax);
+
+        helpMenu.add(helpManual);
+        helpMenu.add(helpAboutApp);
 
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
         menuBar.add(viewMenu);
+        menuBar.add(calculationsMenu);
+        menuBar.add(helpMenu);
 
         return menuBar;
 
@@ -36,14 +65,14 @@ public class Menu extends JFrame  {
     public void Events(){
 
 
-        exitMenuItem.addActionListener(new ActionListener() {
+        exitFileItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
 
-        aboutApp.addActionListener(new ActionListener() {
+        helpAboutApp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Menu menu = new Menu();

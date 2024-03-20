@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
+
     public void centerWindow(){
         // Pobranie rozmiaru ekranu
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -33,8 +34,9 @@ public class MainFrame extends JFrame {
 
         String APPNAME = "PA - Zadanie 1 GUI";
 
-        // menu
+        // menu, pobierz menu
         Menu menuItem = new Menu();
+        JMenuBar getMenu = menuItem.createMenu();
 
         //  Ustawienie tytułu okna
         setTitle(APPNAME);
@@ -45,7 +47,7 @@ public class MainFrame extends JFrame {
         this.centerWindow();
         this.exitWindow();
 
-        setJMenuBar(menuItem.createMenu());
+        setJMenuBar(getMenu);
         menuItem.Events();
 
     }
