@@ -12,33 +12,76 @@ public class Panels extends JFrame  {
     private JButton addBtn, zeroBtn, insertBtn, saveBtn;
     private JTable myTable;
     private JScrollPane scrollTable;
+    private JLabel infoLabel, statusLabel;
+
+    private static final Color BLUE = new Color(200, 200, 255);
+    private static final Color GREEN = new Color(200, 255, 200);
+
 
     public JPanel createMainPanel(){
-        JToolBar toolbarPanel = new Toolbar().getToolbar();
 
-        mainPanel = new JPanel(new BorderLayout());
-        mainPanel.add(toolbarPanel, BorderLayout.NORTH);
-        mainPanel.add(this.createCenterPanel(), BorderLayout.CENTER);
-        mainPanel.add(this.createFooter(), BorderLayout.SOUTH);
+
+
+//        mainPanel = new JPanel(new BorderLayout());
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); // Ustawianie układu w pionie
+
+
+//        mainPanel.add(toolbarPanel, BorderLayout.NORTH);
+//        mainPanel.add(this.createCenterPanel(), BorderLayout.CENTER);
+
+        mainPanel.add(this.createHeaderPanel());
+        mainPanel.add(this.createFirstPanel());
+        mainPanel.add(this.createSecondPanel());
+        mainPanel.add(this.createFooter());
+
+
+
         return mainPanel;
     }
 
     private JPanel createCenterPanel(){
         centerPanel = new JPanel();
-        centerPanel.setPreferredSize(new Dimension(800, 500));
+//        centerPanel.setPreferredSize(new Dimension(100, 500));
 
         // centerPanel.setBounds(10,10,220,20);
 
+//        centerPanel.add(this.createTopTextPanel());
+        centerPanel.add(this.createTable5x5());
+        centerPanel.add(this.createButtonPanel());
+
+        return centerPanel;
+    }
+
+
+    private JPanel createHeaderPanel(){
+        JToolBar toolbarPanel = new Toolbar().getToolbar();
+        centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        centerPanel.add(toolbarPanel);
+        return centerPanel;
+    }
+    private JPanel createFirstPanel(){
+        centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         centerPanel.add(this.createTopTextPanel());
+        return centerPanel;
+    }
+
+    private JPanel createSecondPanel(){
+        centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         centerPanel.add(this.createTable5x5());
         centerPanel.add(this.createButtonPanel());
 
         return centerPanel;
     }
     private JPanel createFooter(){
+        infoLabel = new JLabel("Info Start Aplikacji");
+        statusLabel = new JLabel("Status ON");
+
         footerPanel = new JPanel(new GridLayout(1, 2));
-        footerPanel.add(new JLabel("Info Start Aplikacji"));
-        footerPanel.add(new JLabel("Status ON"));
+
+        footerPanel.add(infoLabel);
+        footerPanel.add(statusLabel);
+
         return footerPanel;
     }
 
@@ -51,13 +94,17 @@ public class Panels extends JFrame  {
         colSpinner = new JSpinner();
         rowSpinner = new JSpinner();
 
-        topTextPanel = new JPanel(new GridLayout(1, 6));
+        insertText.setPreferredSize(new Dimension(50, insertText.getPreferredSize().height));
+        rowSpinner.setPreferredSize(new Dimension(50, rowSpinner.getPreferredSize().height));
+        colSpinner.setPreferredSize(new Dimension(50, colSpinner.getPreferredSize().height));
+
+
+        topTextPanel = new JPanel();
 
         topTextPanel.add(insertLabel);
         topTextPanel.add(insertText);
 
         topTextPanel.add(new JSeparator());
-
 
         topTextPanel.add(rowLabel);
         topTextPanel.add(rowSpinner);
@@ -72,17 +119,19 @@ public class Panels extends JFrame  {
     }
 
     private JPanel createButtonPanel(){
-        buttonPanel = new JPanel(new GridLayout(6,2));
+        buttonPanel = new JPanel(new GridLayout(4,1, 20, 20));
 
         addBtn = new JButton("Dodaj");
         zeroBtn = new JButton("Wyzeruj");
         insertBtn = new JButton("Wypełnij");
         saveBtn = new JButton("Zapisz");
 
+
         buttonPanel.add(addBtn);
         buttonPanel.add(zeroBtn);
         buttonPanel.add(insertBtn);
         buttonPanel.add(saveBtn);
+
 
         return buttonPanel;
     }
@@ -107,7 +156,7 @@ public class Panels extends JFrame  {
         myTable = new JTable(data, columnHeaders);
 
         // Ustawiamy preferowany rozmiar tabeli (opcjonalne)
-        myTable.setPreferredScrollableViewportSize(new Dimension(800, 800));
+        myTable.setPreferredScrollableViewportSize(new Dimension(600, 100));
         myTable.getTableHeader().setReorderingAllowed(false);
 
         // Ustawiamy możliwosc scrollowania
@@ -118,3 +167,5 @@ public class Panels extends JFrame  {
         return scrollTable;
     }
 }
+
+

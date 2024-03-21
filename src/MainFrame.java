@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
         // Ustawienia rozmiaru okna
         setSize(900, 900);
 
-        setResizable(true);
+        setResizable(false);
         setLocationRelativeTo(null);
 
         // Ustawienie widoczności okna
@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
         Panels panels = new Panels();
         JPanel mainPanel = panels.createMainPanel();
 
-        frame.add(mainPanel);
+        frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
         frame.pack();
 
     }
