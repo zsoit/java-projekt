@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Menu extends JFrame  {
-
     private final String AUTHOR = "Jakub Achtelik U-20019";
     private JMenuBar menuBar;
     private JMenu fileMenu, editMenu, viewMenu,calculationsMenu, helpMenu;
@@ -13,6 +12,9 @@ public class Menu extends JFrame  {
     private JMenuItem cutEditItem, copyEditItem, pasteEditItem;
     private JMenuItem calculationsSum, calculationsAvg, calculationsMin, calculationsMax;
     private  JMenuItem helpAboutApp, helpManual;
+    private JDialog aboutDialog;
+    private JTextArea aboutTextArea;
+    private JButton closeButton;
 
     public Menu(){
 
@@ -90,19 +92,19 @@ public class Menu extends JFrame  {
 
 
     public void showAboutDialog() {
-        JDialog aboutDialog = new JDialog(this, "O programie", true);
+        aboutDialog = new JDialog(this, "O programie", true);
         aboutDialog.setSize(300, 200);
         aboutDialog.setLocationRelativeTo(this);
         aboutDialog.setLayout(new BorderLayout());
 
         // Treść informacji o programie i autorze
-        JTextArea aboutTextArea = new JTextArea();
+        aboutTextArea = new JTextArea();
         aboutTextArea.setEditable(false);
         aboutTextArea.setText("Autor: " + AUTHOR + "\nPK - Zadanie 1");
         aboutDialog.add(aboutTextArea, BorderLayout.CENTER);
 
         // Przycisk do zamknięcia okna
-        JButton closeButton = new JButton("Zamknij");
+        closeButton = new JButton("Zamknij");
         closeButton.addActionListener(e -> aboutDialog.dispose());
         aboutDialog.add(closeButton, BorderLayout.SOUTH);
 

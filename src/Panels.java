@@ -6,6 +6,12 @@ public class Panels extends JFrame  {
 
     private JPanel mainPanel, centerPanel;
     private JPanel topTextPanel, buttonPanel, footerPanel;
+    private JLabel insertLabel, rowLabel, colLabel;
+    private JSpinner rowSpinner, colSpinner;
+    private JTextField insertText;
+    private JButton addBtn, zeroBtn, insertBtn, saveBtn;
+    private JTable myTable;
+    private JScrollPane scrollTable;
 
     public JPanel createMainPanel(){
         JToolBar toolbarPanel = new Toolbar().getToolbar();
@@ -37,28 +43,29 @@ public class Panels extends JFrame  {
     }
 
     private JPanel createTopTextPanel(){
-        JLabel insertNumberLabel = new JLabel("Wprowadz Tekst");
-//        insertNumberLabel.setBounds(10,10,220,20);
-        insertNumberLabel.add(new JTextField());
 
-        JTextField insertNumber = new JTextField();
-//        insertNumber.setBounds(5,5,10,10);
+        insertLabel = new JLabel("Wprowadź tekst: ");
+        rowLabel = new JLabel("Numer wiersza: ");
+        colLabel = new JLabel("Numer kolumny: ");
+        insertText = new JTextField();
+        colSpinner = new JSpinner();
+        rowSpinner = new JSpinner();
 
         topTextPanel = new JPanel(new GridLayout(1, 6));
 
-        topTextPanel.add(insertNumberLabel);
-        topTextPanel.add(insertNumber);
+        topTextPanel.add(insertLabel);
+        topTextPanel.add(insertText);
 
         topTextPanel.add(new JSeparator());
 
 
-        topTextPanel.add( new JLabel("Numer wiersza"));
-        topTextPanel.add(new JSpinner());
+        topTextPanel.add(rowLabel);
+        topTextPanel.add(rowSpinner);
 
         topTextPanel.add(new JSeparator());
 
-        topTextPanel.add( new JLabel("Numer kolumny"));
-        topTextPanel.add(new JSpinner());
+        topTextPanel.add(colLabel);
+        topTextPanel.add(colSpinner);
 
         return  topTextPanel;
 
@@ -67,15 +74,16 @@ public class Panels extends JFrame  {
     private JPanel createButtonPanel(){
         buttonPanel = new JPanel(new GridLayout(6,2));
 
-        JButton addBtn = new JButton("Dodaj");
-        JButton zeroBtn = new JButton("Wyzeruj");
-        JButton insertBtn = new JButton("Wypełnij");
-        JButton saveBtn = new JButton("Zapisz");
+        addBtn = new JButton("Dodaj");
+        zeroBtn = new JButton("Wyzeruj");
+        insertBtn = new JButton("Wypełnij");
+        saveBtn = new JButton("Zapisz");
 
         buttonPanel.add(addBtn);
         buttonPanel.add(zeroBtn);
         buttonPanel.add(insertBtn);
         buttonPanel.add(saveBtn);
+
         return buttonPanel;
     }
 
@@ -83,7 +91,7 @@ public class Panels extends JFrame  {
         JFrame frame = new JFrame("Tabela 5x5");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Dane dla tabeli (możesz je zastąpić własnymi danymi)
+        // Dane dla tabeli
         Object[][] data = {
                 {0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0},
@@ -96,17 +104,17 @@ public class Panels extends JFrame  {
         String[] columnHeaders = {"1", "2", "3", "4", "5"};
 
         // Tworzymy tabelę na podstawie danych i nagłówków
-        JTable table = new JTable(data, columnHeaders);
+        myTable = new JTable(data, columnHeaders);
 
         // Ustawiamy preferowany rozmiar tabeli (opcjonalne)
-        table.setPreferredScrollableViewportSize(new Dimension(800, 800));
+        myTable.setPreferredScrollableViewportSize(new Dimension(800, 800));
+        myTable.getTableHeader().setReorderingAllowed(false);
 
-        table.getTableHeader().setReorderingAllowed(false);
+        // Ustawiamy możliwosc scrollowania
+        scrollTable  = new JScrollPane(myTable);
+        scrollTable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollTable.setBounds(10,50,600,10);
 
-        JScrollPane przewijanie_tabeli = new JScrollPane(table);
-        przewijanie_tabeli.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        przewijanie_tabeli.setBounds(10,50,600,10);
-
-        return przewijanie_tabeli;
+        return scrollTable;
     }
 }

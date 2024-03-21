@@ -2,12 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
+
+    private JMenuBar getMenu;
     private final String APP_NAME = "PA - Zadanie 1 GUI";
     public MainFrame() {
 
         // menu, pobierz menu
-        Menu menuItem = new Menu();
-        JMenuBar getMenu = menuItem.createMenu();
+        getMenu = new Menu().createMenu();
+        setJMenuBar(getMenu);
 
         //  Ustawienie tytułu okna
         setTitle(APP_NAME);
@@ -24,22 +26,16 @@ public class MainFrame extends JFrame {
         this.centerWindow();
         this.exitWindow();
 
-        setJMenuBar(getMenu);
-
     }
 
-
-
     public static void main(String[] args) {
-        // Utworzenie obiektu ramki głównej
-        MainFrame frame = new MainFrame();
-        Panels panels = new Panels();
 
+        JFrame frame = new MainFrame();
+        Panels panels = new Panels();
         JPanel mainPanel = panels.createMainPanel();
 
         frame.add(mainPanel);
         frame.pack();
-
 
     }
 
