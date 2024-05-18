@@ -17,8 +17,12 @@ zadania:
   wartości z pola tekstowego do komórki tablicy, i zapis jej zawartości do pliku.
   - Przestrzeń tekstową (JTextArea) zawierającą wyniki obliczeń. 
  4. Opisać zdarzenia realizowane przez metodę akcji (interfejs ActionListener). Zdarzenia
-  powinny być uruchamiane za pomocą przycisków, menu i paska narzędziowego. 5. Przekształcić napis z pola tekstowego na liczbę. Za pomocą instrukcji try {} catach {}
+  powinny być uruchamiane za pomocą przycisków, menu i paska narzędziowego. 
+5. Przekształcić napis z pola tekstowego na liczbę. Za pomocą instrukcji try {} catach {}
   zabezpieczyć  program  przed  błędami.  Wykorzystać  okno  dialogowe  do  informacji o błędach (JOptionPane).
   6. Dodać pole wyboru (JList dla ostatniej cyfry indeksu równej wartości z przedziału 0-4
     i JComboBox dla wartości 5-9) z trzema elementami, a wyniki umieścić w przestrzeni
-    tekstowej.  a. Suma elementów - obliczenie sumy wszystkich elementów tablicy b. Średnia elementów – obliczenie średniej z wszystkich elementów tablicy c. Wartość max i min – znalezienie liczby z największą i najmniejszą wartością.  
+    tekstowej.  
+- a. Suma elementów - obliczenie sumy wszystkich elementów tablicy 
+- b. Średnia elementów – obliczenie średniej z wszystkich elementów tablicy 
+- c. Wartość max i min – znalezienie liczby z największą i najmniejszą wartością.  

@@ -11,18 +11,14 @@ import java.awt.event.*;
 
 
 public class Window extends JFrame implements ActionListener  {
-    //definicja zmiennych menu
-    private JMenu fileMenu, helpMenu, editMenu, viewMenu, calcMenu;
-    protected JMenuItem saveMenuItem, printMenuItem, exitMenuItem, aboutMenuItem, helpMenuItem, undoMenuItem, redoMenuItem, zoominMenuItem, zoomoutMenuItem, addMenuItem, meanMenuItem, minMenuItem, maxMenuItem;
-    protected JButton jbtExit, jbtAbout, jbtHelpContext, jbtSave, jbtPrint, jbtSigma, jbtMean, jbtMin, jbtMax;
-    protected JButton addValue, addZeros, addFill, addSave, obliczBtn;
+
+    private  JButton jbtExit, jbtAbout, jbtHelpContext, jbtSave, jbtPrint, jbtSigma, jbtMean, jbtMin, jbtMax;
+    private  JButton addValue, addZeros, addFill, addSave, obliczBtn;
     private StatusPanel statusPanel;
 
-    private Icons myIcons = new Icons();
-
-    protected JLabel labelValue, labelRow, labelCol;
-    protected JTextField jtfValue;
-    protected JSpinner jsRow, jsCol;
+    private  JLabel labelValue, labelRow, labelCol;
+    private  JTextField jtfValue;
+    private  JSpinner jsRow, jsCol;
     private SpinnerNumberModel modelRow, modelCol;
     protected JTable table;
 
@@ -31,6 +27,11 @@ public class Window extends JFrame implements ActionListener  {
     protected JTextArea obszarWynikow;
     private JScrollPane przewijanieWynikow;
     private Font font;
+
+    private Icons myIcons = new Icons();
+    private WindowModel model = new WindowModel();
+    private Menu myMenu = new Menu(this, myIcons);
+
 
 
     public Window() {
@@ -54,10 +55,10 @@ public class Window extends JFrame implements ActionListener  {
             cp.add(statusPanel, BorderLayout.SOUTH);
             cp.add(createCenterPanel(), BorderLayout.CENTER);
         } catch (IconException ie) {
-            JOptionPane.showMessageDialog(this, "Błąd podczas wczytywania icon");
+            ShowMessageDialog("Błąd: ", "Błąd podczas wczytywania icon");
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Błąd podczas tworzenia GUI");
+            ShowMessageDialog("Błąd: ", "Błąd podczas tworzenia GUI");
         }
     }
 
@@ -185,22 +186,6 @@ public class Window extends JFrame implements ActionListener  {
         return jp;
     }
 
-    public JMenu createJMenu(String name, int keyEvent) {
-        JMenu jMenu = new JMenu(name);
-        jMenu.setMnemonic(keyEvent);
-        return jMenu;
-    }
-
-    public JMenuItem createJMenuItem(String name, Icon icon, KeyStroke key) {
-        JMenuItem jMI;
-        if (icon != null)
-            jMI = new JMenuItem(name, icon);
-        else jMI = new JMenuItem(name);
-        jMI.setAccelerator(key);
-        jMI.addActionListener(this);
-        return jMI;
-    }
-
     private JButton createJButtonToolBar(String tooltip, Icon icon) {
         JButton jb = new JButton("", icon);
         jb.setToolTipText(tooltip);
@@ -210,55 +195,10 @@ public class Window extends JFrame implements ActionListener  {
 
     private void createMenus() {
         //utworzenie paska manu
-        JMenuBar menuBar = new JMenuBar();
-        //utworzenie pol menu glownego
-        fileMenu = createJMenu("Plik", KeyEvent.VK_P);
-        editMenu = createJMenu("Edycja", KeyEvent.VK_E);
-        viewMenu = createJMenu("Widok", KeyEvent.VK_W);
-        calcMenu = createJMenu("Obliczenia", KeyEvent.VK_O);
-        helpMenu = createJMenu("Pomoc", KeyEvent.VK_C);
-
-
-        //utworzenie menuitem
-        saveMenuItem = createJMenuItem("Zapisz plik", myIcons.mIconSave, shortCuts(KeyEvent.VK_S));
-        printMenuItem = createJMenuItem("Wydrukuj", myIcons.mIconPrint, shortCuts(KeyEvent.VK_P));
-        exitMenuItem = createJMenuItem("Zamknij", myIcons.mIconExit, shortCuts(KeyEvent.VK_X));
-        undoMenuItem = createJMenuItem("Cofnij", myIcons.mIconUndo, shortCuts(KeyEvent.VK_Z));
-        redoMenuItem = createJMenuItem("Przywróć", myIcons.mIconRedo, shortCuts(KeyEvent.VK_Y));
-        zoomoutMenuItem = createJMenuItem("Powiększ", myIcons.mIconZoomOut, shortCuts(KeyEvent.VK_U));
-        zoominMenuItem = createJMenuItem("Pomniejsz", myIcons.mIconZoomIn, shortCuts(KeyEvent.VK_I));
-        addMenuItem = createJMenuItem("Dodawanie", myIcons.mIconAdd, shortCuts(KeyEvent.VK_Q));
-        meanMenuItem = createJMenuItem("Średnia", myIcons.mIconMean, shortCuts(KeyEvent.VK_W));
-        minMenuItem = createJMenuItem("Min", myIcons.mIconMin, shortCuts(KeyEvent.VK_E));
-        maxMenuItem = createJMenuItem("Max", myIcons.mIconMax, shortCuts(KeyEvent.VK_R));
-        aboutMenuItem = createJMenuItem("O autorze", myIcons.mIconAbout, shortCuts(KeyEvent.VK_A));
-        helpMenuItem = createJMenuItem("Kontekst pomocy", myIcons.mIconHelp, shortCuts(KeyEvent.VK_C));
-
-        fileMenu.add(saveMenuItem);
-        fileMenu.add(printMenuItem);
-        fileMenu.add(exitMenuItem);
-        editMenu.add(undoMenuItem);
-        editMenu.add(redoMenuItem);
-        viewMenu.add(zoominMenuItem);
-        viewMenu.add(zoomoutMenuItem);
-        calcMenu.add(addMenuItem);
-        calcMenu.add(meanMenuItem);
-        calcMenu.add(minMenuItem);
-        calcMenu.add(maxMenuItem);
-        helpMenu.add(helpMenuItem);
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(fileMenu);
-        menuBar.add(editMenu);
-        menuBar.add(viewMenu);
-        menuBar.add(calcMenu);
-        menuBar.add(helpMenu);
+        JMenuBar  menuBar = myMenu.getMenu();
         setJMenuBar(menuBar);
     }
 
-    public static KeyStroke shortCuts(int event){
-       return  KeyStroke.getKeyStroke(event, ActionEvent.ALT_MASK);
-    }
     private JToolBar createToolBar() {
         JToolBar jbt = new JToolBar(JToolBar.HORIZONTAL);
         jbt.setFloatable(false);
@@ -308,36 +248,35 @@ public class Window extends JFrame implements ActionListener  {
     }
 
 
-    private WindowModel model = new WindowModel();
 
 
     @Override
     public void actionPerformed(ActionEvent event) {
 
-        // TODO Auto-generated method stub
 
-        String result = " ";
+        String result;
+        result = " ";
 
-        if (event.getSource() == saveMenuItem || event.getSource() == jbtSave || event.getSource() == addSave) {
+        if (event.getSource() == myMenu.saveMenuItem || event.getSource() == jbtSave || event.getSource() == addSave) {
             ShowMessageDialog("Zapis", "Plik został zapisany pomyślnie!");
         }
-        if (event.getSource() == printMenuItem || event.getSource() == jbtPrint) {
+        if (event.getSource() == myMenu.printMenuItem || event.getSource() == jbtPrint) {
             ShowMessageDialog("Drukowanie", "Plik został wydrukowany pomyślnie!");
         }
-        if (event.getSource() == exitMenuItem || event.getSource() == jbtExit) {
+        if (event.getSource() == myMenu.exitMenuItem || event.getSource() == jbtExit) {
             closeWindow();
         }
-        if (event.getSource() == helpMenuItem || event.getSource() == jbtHelpContext) {
-            ShowMessageDialog("Kontekst pomocy", "Dokumentacja");
+        if (event.getSource() == myMenu.helpMenuItem || event.getSource() == jbtHelpContext) {
+            ShowMessageDialog("Kontekst pomocy", Config.DOCS_INFO);
         }
-        if (event.getSource() == aboutMenuItem || event.getSource() == jbtAbout) {
-            ShowMessageDialog("Informacje o autorze", "Wersja: 1.0.8\nAutor: Jakub Achtelik\nKierunek: Informatyka.\nSemestr: IV.\nKontakt: achtelik.jakub@gmail.com");
+        if (event.getSource() == myMenu.aboutMenuItem || event.getSource() == jbtAbout) {
+            ShowMessageDialog("Informacje o autorze", Config.ABOUT_AUTHOR);
 
         }
-        if (event.getSource() == zoominMenuItem) {
+        if (event.getSource() == myMenu.zoominMenuItem) {
             zoomOut();
         }
-        if (event.getSource() == zoomoutMenuItem) {
+        if (event.getSource() == myMenu.zoomoutMenuItem) {
             zoomIn();
         }
 
@@ -353,16 +292,16 @@ public class Window extends JFrame implements ActionListener  {
             result = model.setValueTable(indeksWiersza, indeksKolumny, wartosc, obszarWynikow, table);
 
         }
-        if (event.getSource() == jbtSigma || event.getSource() == addMenuItem || event.getSource() == addValue) {
+        if (event.getSource() == jbtSigma || event.getSource() == myMenu.addMenuItem || event.getSource() == addValue) {
             result =  model.additionalElements(table);
         }
-        if (event.getSource() == jbtMean || event.getSource() == meanMenuItem) {
+        if (event.getSource() == jbtMean || event.getSource() == myMenu.meanMenuItem) {
             result =  model.avgElements(table);
         }
-        if (event.getSource() == jbtMin || event.getSource() == minMenuItem) {
+        if (event.getSource() == jbtMin || event.getSource() == myMenu.minMenuItem) {
             result = model.minElements(table);
         }
-        if (event.getSource() == jbtMax || event.getSource() == maxMenuItem) {
+        if (event.getSource() == jbtMax || event.getSource() == myMenu.maxMenuItem) {
             result =  model.maxElements(table);
         }
 
@@ -398,7 +337,6 @@ public class Window extends JFrame implements ActionListener  {
 
 
         resultAreaAlert(result);
-
 
     }
 

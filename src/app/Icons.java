@@ -7,7 +7,7 @@ public class Icons {
 
 
 
-    private static final String ICON_PATH = "/resources/";
+    private static final String ICON_PATH = "/icons/";
 
 
     public Icon mIconSave, mIconPrint, iconExit, mIconExit, iconAbout, mIconAbout, iconHelp, mIconHelp, mIconUndo, mIconRedo, mIconZoomIn, mIconZoomOut, mIconAdd, mIconMean, mIconMin, mIconMax, iconSave, iconPrint, iconSigma, iconMean, iconMin, iconMax;
@@ -15,35 +15,37 @@ public class Icons {
 
     public void createIcons() throws IconException {
 
-        // utworzenie ikon 24 * 24 px dla paska toolbar
-        iconExit = createMyIcon("exit.png");
-        iconAbout = createMyIcon("about.png");
-        iconHelp = createMyIcon("help.png");
-        iconSave = createMyIcon("save.png");
-        iconPrint = createMyIcon("print.png");
-        iconSigma = createMyIcon("sigma.png");
-        iconMean = createMyIcon("mean.png");
-        iconMin = createMyIcon("min.png");
-        iconMax = createMyIcon("max.png");
-        iconAdding = createMyIcon("add.png");
-        iconZero = createMyIcon("zero.png");
-        iconFill = createMyIcon("fill.png");
-        iconSave_Doc = createMyIcon("save_document.png");
+        // 24x24 px dla paska toolbar
+        iconExit = createMyIcon("/24x24_toolbar/exit.png");
+        iconAbout = createMyIcon("/24x24_toolbar/about.png");
+        iconHelp = createMyIcon("/24x24_toolbar/help.png");
+        iconSave = createMyIcon("/24x24_toolbar/save.png");
+        iconPrint = createMyIcon("/24x24_toolbar/print.png");
+        iconSigma = createMyIcon("/24x24_toolbar/sigma.png");
+        iconMean = createMyIcon("/24x24_toolbar/addition.png");
+        iconMin = createMyIcon("/24x24_toolbar/min.png");
+        iconMax = createMyIcon("/24x24_toolbar/max.png");
 
-        // utworzenie ikon 16 * 16 px dla paska menu
-        mIconExit = createMyIcon("mexit.png");
-        mIconAbout = createMyIcon("mabout.png");
-        mIconHelp = createMyIcon("mhelp.png");
-        mIconSave = createMyIcon("msave.png");
-        mIconPrint = createMyIcon("mprint.png");
-        mIconUndo = createMyIcon("undo.png");
-        mIconRedo = createMyIcon("redo.png");
-        mIconZoomIn = createMyIcon("zoom_in.png");
-        mIconZoomOut = createMyIcon("zoom_out.png");
-        mIconAdd = createMyIcon("msigma.png");
-        mIconMean = createMyIcon("mmean.png");
-        mIconMin = createMyIcon("mmin.png");
-        mIconMax = createMyIcon("mmax.png");
+        // 16x16 dla przyciskow
+        iconAdding = createMyIcon("/16x16_btn/add.png");
+        iconZero = createMyIcon("/16x16_btn/zero.png");
+        iconFill = createMyIcon("/16x16_btn/fill.png");
+        iconSave_Doc = createMyIcon("/16x16_btn/save_document.png");
+
+        // 16x16 px dla paska menu
+        mIconExit = createMyIcon("/16x16_toolbar/exit.png");
+        mIconAbout = createMyIcon("/16x16_toolbar/about.png");
+        mIconHelp = createMyIcon("/16x16_toolbar/help.png");
+        mIconSave = createMyIcon("/16x16_toolbar/save.png");
+        mIconPrint = createMyIcon("/16x16_toolbar/print.png");
+        mIconUndo = createMyIcon("/16x16_toolbar/undo.png");
+        mIconRedo = createMyIcon("/16x16_toolbar/redo.png");
+        mIconZoomIn = createMyIcon("/16x16_toolbar/zoom_in.png");
+        mIconZoomOut = createMyIcon("/16x16_toolbar/zoom_out.png");
+        mIconAdd = createMyIcon("/16x16_toolbar/sigma.png");
+        mIconMean = createMyIcon("/16x16_toolbar/addition.png");
+        mIconMin = createMyIcon("/16x16_toolbar/min.png");
+        mIconMax = createMyIcon("/16x16_toolbar/max.png");
 
     }
 
