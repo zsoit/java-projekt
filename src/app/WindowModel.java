@@ -5,54 +5,59 @@ import javax.swing.*;
 public class WindowModel {
 
 
-
     public String resetTable(JTable table) {
-        for (int wiersz = 0; wiersz < table.getRowCount(); wiersz++) {
-            for (int kolumna = 0; kolumna < table.getColumnCount(); kolumna++) {
-                table.setValueAt(0, wiersz, kolumna);
+        for (int row = 0; row < table.getRowCount(); row++) {
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                table.setValueAt(0, row, col);
             }
         }
         return "Zerowanie tablicy \n";
     }
 
+
     public String setValueTable(
-            int indeksWiersza, int indeksKolumny, int wartosc, JTextArea obszarWynikow, JTable table
+            int rowIndex, int colIndex, int value, JTable table
     ) {
 
-            table.setValueAt(wartosc, indeksWiersza-1, indeksKolumny-1);
+            table.setValueAt(value, rowIndex-1, colIndex-1);
             table.repaint();
 
-            return "Ustawiono wartość " + wartosc + " w wierszu " + indeksWiersza + ", kolumnie " + indeksKolumny + "\n";
+
+            return "Ustawiono wartość " + value + " w wierszu " + rowIndex + ", kolumnie " + colIndex + "\n";
 
     }
 
+
     public String additionalElements(JTable table) {
         int suma = 0;
-        for (int wiersz = 0; wiersz < table.getRowCount(); wiersz++) {
-            for (int kolumna = 0; kolumna < table.getColumnCount(); kolumna++) {
-                suma += (int) table.getValueAt(wiersz, kolumna);
+        for (int row = 0; row < table.getRowCount(); row++) {
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                suma += (int) table.getValueAt(row, col);
             }
         }
+
+        
         return "Suma wszystkich elementów: " + suma + "\n";
     }
 
     public String avgElements(JTable table) {
         int suma = 0;
-        for (int wiersz = 0; wiersz < table.getRowCount(); wiersz++) {
-            for (int kolumna = 0; kolumna < table.getColumnCount(); kolumna++) {
-                suma += (int) table.getValueAt(wiersz, kolumna);
+        for (int row = 0; row < table.getRowCount(); row++) {
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                suma += (int) table.getValueAt(row, col);
             }
         }
+        
         double srednia = (double) suma / (table.getRowCount() * table.getColumnCount());
         return "Średnia wszystkich elementów: " + srednia + "\n";
     }
 
     public  String minElements(JTable table) {
         int min = Integer.MAX_VALUE;
-        for (int wiersz = 0; wiersz < table.getRowCount(); wiersz++) {
-            for (int kolumna = 0; kolumna < table.getColumnCount(); kolumna++) {
-                int wartosc = (int) table.getValueAt(wiersz, kolumna);
-                min = Math.min(min, wartosc);
+        for (int row = 0; row < table.getRowCount(); row++) {
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                int value = (int) table.getValueAt(row, col);
+                min = Math.min(min, value);
             }
         }
         return "Wartość minimalna: " + min + "\n";
@@ -60,12 +65,14 @@ public class WindowModel {
 
     public String maxElements(JTable table) {
         int max = Integer.MIN_VALUE;
-        for (int wiersz = 0; wiersz < table.getRowCount(); wiersz++) {
-            for (int kolumna = 0; kolumna < table.getColumnCount(); kolumna++) {
-                int wartosc = (int) table.getValueAt(wiersz, kolumna);
-                max = Math.max(max, wartosc);
+        for (int row = 0; row < table.getRowCount(); row++) {
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                int value = (int) table.getValueAt(row, col);
+                max = Math.max(max, value);
             }
         }
         return "Wartość maksymalna: " + max + "\n";
     }
 }
+
+

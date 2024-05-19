@@ -13,19 +13,19 @@ import java.awt.event.*;
 public class Window extends JFrame implements ActionListener  {
 
     private  JButton jbtExit, jbtAbout, jbtHelpContext, jbtSave, jbtPrint, jbtSigma, jbtMean, jbtMin, jbtMax;
-    private  JButton addValue, addZeros, addFill, addSave, obliczBtn;
+    private  JButton addValue, addZeros, addFill, addSave, calcBtn;
     private StatusPanel statusPanel;
-
+    
     private  JLabel labelValue, labelRow, labelCol;
     private  JTextField jtfValue;
     private  JSpinner jsRow, jsCol;
     private SpinnerNumberModel modelRow, modelCol;
     protected JTable table;
 
-    private JPanel panelOblicz;
+    private JPanel calcPanel;
 
-    protected JTextArea obszarWynikow;
-    private JScrollPane przewijanieWynikow;
+    protected JTextArea resultArea;
+    private JScrollPane resultScroll;
     private Font font;
 
     private Icons myIcons = new Icons();
@@ -62,6 +62,27 @@ public class Window extends JFrame implements ActionListener  {
         }
     }
 
+    private void setTable(){
+        table = new JTable(5, 5);
+        table.setEnabled(false);
+        table.setRowHeight(table.getRowHeight() + 11);
+        table.setBackground(new Color(211, 211, 211));
+        table.getTableHeader().setReorderingAllowed(false);
+        table.getTableHeader().setResizingAllowed(false);
+
+        // Wyśrodkowanie tytułów kolumn znajdujących się na górze tabeli
+        ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Ustawienie renderera komórek dla danych
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+        table.setDefaultRenderer(Object.class, rightRenderer);
+
+        new JScrollPane(table);
+
+
+    }
+
     private void initGUI() {
         statusPanel = new StatusPanel();
 
@@ -77,24 +98,7 @@ public class Window extends JFrame implements ActionListener  {
         jsRow = new JSpinner(modelRow);
         jsCol = new JSpinner(modelCol);
 
-
-        table = new JTable(5, 5);
-        table.setEnabled(false);
-        table.setRowHeight(table.getRowHeight() + 11);
-        table.setBackground(new Color(211, 211, 211));
-        table.getTableHeader().setReorderingAllowed(false);
-        table.getTableHeader().setResizingAllowed(false);
-
-
-        // Wyśrodkowanie tytułów kolumn znajdujących się na górze tabeli
-        ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-
-        // Ustawienie renderera komórek dla danych
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
-        table.setDefaultRenderer(Object.class, rightRenderer);
-
-        new JScrollPane(table);
+        setTable();
 
         //definiowanie czcionki przycisków
         font = new Font("Helvetica Neue", Font.BOLD, 12);
@@ -117,7 +121,7 @@ public class Window extends JFrame implements ActionListener  {
         addSave.addActionListener(this);
         addSave.setFont(font);
 
-        panelOblicz = new JPanel(new GridLayout(1, 4));
+        calcPanel = new JPanel(new GridLayout(1, 4));
         JLabel obliczenia = new JLabel("Obliczenia:");
         String[] operacje = {"Wybierz operację", "Dodawanie", "Min", "Max", "Średnia"};
         JComboBox<String> comboBox = new JComboBox<>(operacje);
@@ -125,30 +129,31 @@ public class Window extends JFrame implements ActionListener  {
         comboBox.setBounds(50, 30, 200, 30);
         JLabel pustyLabel = new JLabel();
 
-        obliczBtn = new JButton("Oblicz");
-        obliczBtn.addActionListener(this);
+        calcBtn = new JButton("Oblicz");
+        calcBtn.addActionListener(this);
 
 
-        panelOblicz.add(obliczenia);
-        panelOblicz.add(comboBox);
-        panelOblicz.add(obliczBtn);
-        panelOblicz.add(pustyLabel);
+        calcPanel.add(obliczenia);
+        calcPanel.add(comboBox);
+        calcPanel.add(calcBtn);
+        calcPanel.add(pustyLabel);
 
 
-        obszarWynikow = new JTextArea();
-        obszarWynikow.setEditable(false);
+        resultArea = new JTextArea();
+        resultArea.setEditable(false);
 
 
-        przewijanieWynikow = new JScrollPane(obszarWynikow);
-        przewijanieWynikow.setViewportView(obszarWynikow); // Ustawienie widoku na JTextArea
 
-        obszarWynikow.setCaretPosition(obszarWynikow.getDocument().getLength()); //automatyczne przewijanie
+        resultScroll = new JScrollPane(resultArea);
+        resultScroll.setViewportView(resultArea); // Ustawienie widoku na JTextArea
+
+        resultArea.setCaretPosition(resultArea.getDocument().getLength()); //automatyczne przewijanie
 
         TitledBorder titledBorder = BorderFactory.createTitledBorder("Uzyskany rezultat");
         // Ustawienie wyśrodkowania tytułu
         titledBorder.setTitleJustification(TitledBorder.CENTER);
         // Ustawienie ramki z tytułem na komponencie
-        przewijanieWynikow.setBorder(titledBorder);
+        resultScroll.setBorder(titledBorder);
     }
 
     private JPanel createCenterPanel() {
@@ -178,9 +183,9 @@ public class Window extends JFrame implements ActionListener  {
         jp.add(addFill, cc.xyw(11, 8, 3, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(addSave, cc.xyw(11, 10, 3, CellConstraints.FILL, CellConstraints.FILL));
 
-        jp.add(panelOblicz, cc.xyw(2, 13, 10, CellConstraints.FILL, CellConstraints.FILL));
+        jp.add(calcPanel, cc.xyw(2, 13, 10, CellConstraints.FILL, CellConstraints.FILL));
 
-        jp.add(przewijanieWynikow, cc.xyw(2, 15, 12, CellConstraints.FILL, CellConstraints.FILL));
+        jp.add(resultScroll, cc.xyw(2, 15, 12, CellConstraints.FILL, CellConstraints.FILL));
 
 
         return jp;
@@ -285,11 +290,11 @@ public class Window extends JFrame implements ActionListener  {
             result = model.resetTable(table);
         }
         if (event.getSource() == addFill) {
-            int indeksWiersza = (int) jsRow.getValue();
-            int indeksKolumny = (int) jsCol.getValue();
-            int wartosc = Integer.parseInt(jtfValue.getText());
+            int rowIndex = (int) jsRow.getValue();
+            int colIndex = (int) jsCol.getValue();
+            int value = Integer.parseInt(jtfValue.getText());
 
-            result = model.setValueTable(indeksWiersza, indeksKolumny, wartosc, obszarWynikow, table);
+            result = model.setValueTable(rowIndex, colIndex, value, table);
 
         }
         if (event.getSource() == jbtSigma || event.getSource() == myMenu.addMenuItem || event.getSource() == addValue) {
@@ -306,9 +311,8 @@ public class Window extends JFrame implements ActionListener  {
         }
 
 
-        if (event.getSource() == obliczBtn) {
-            @SuppressWarnings("unchecked")
-            JComboBox<String> comboBox = (JComboBox<String>) ((JPanel) obliczBtn.getParent()).getComponent(1);
+        if (event.getSource() == calcBtn) {
+            JComboBox<String> comboBox = (JComboBox<String>) ((JPanel) calcBtn.getParent()).getComponent(1);
             String selectedOperation = (String) comboBox.getSelectedItem();
             switch (selectedOperation) {
                 case "Dodawanie":
@@ -341,7 +345,7 @@ public class Window extends JFrame implements ActionListener  {
     }
 
     protected void resultAreaAlert(String desc){
-        obszarWynikow.append(desc);
+        resultArea.append(desc);
     }
 
     protected void ShowMessageDialog(String title1, String title2){
