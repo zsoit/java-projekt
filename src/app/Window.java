@@ -18,7 +18,8 @@ public class Window extends JFrame implements ActionListener  {
     
     private  JLabel labelValue, labelRow, labelCol;
     private  JTextField jtfValue;
-    private  JSpinner jsRow, jsCol;
+    private JSlider jsRow;
+    private JSlider jsCol;
     private SpinnerNumberModel modelRow, modelCol;
     protected JTable table;
 
@@ -62,6 +63,17 @@ public class Window extends JFrame implements ActionListener  {
         }
     }
 
+    private void initGUI() {
+        statusPanel = new StatusPanel();
+
+        setTextField();
+        setSlider();
+        setTable();
+        setButtons();
+        setCalcPanel();
+        setResultArea();
+    }
+
     private void setTable(){
         table = new JTable(5, 5);
         table.setEnabled(false);
@@ -83,22 +95,32 @@ public class Window extends JFrame implements ActionListener  {
 
     }
 
-    private void initGUI() {
-        statusPanel = new StatusPanel();
+    private void setSlider(){
+        labelRow = new JLabel("Nr wiersza", JLabel.LEFT);
+        labelCol = new JLabel("Nr kolumny", JLabel.LEFT);
 
+        // Suwak dla wierszy
+        jsRow = new JSlider(JSlider.HORIZONTAL, 1, 5, 1);
+        jsRow.setMajorTickSpacing(1);  // Duże odstępy co 1
+        jsRow.setMinorTickSpacing(1);  // Małe odstępy co 1
+        jsRow.setPaintTicks(true);
+        jsRow.setPaintLabels(true);
+
+        // Suwak dla kolumn
+        jsCol = new JSlider(JSlider.HORIZONTAL, 1, 5, 1);
+        jsCol.setMajorTickSpacing(1);  // Duże odstępy co 1
+        jsCol.setMinorTickSpacing(1);  // Małe odstępy co 1
+        jsCol.setPaintTicks(true);
+        jsCol.setPaintLabels(true);
+    }
+
+    private void setTextField(){
         labelValue = new JLabel("Wprowadź liczbę", JLabel.LEFT);
-        labelRow = new JLabel("Numer wiersza", JLabel.LEFT);
-        labelCol = new JLabel("Numer kolumny", JLabel.LEFT);
-
         jtfValue = new JTextField("0");
         jtfValue.setHorizontalAlignment(JTextField.RIGHT);
+    }
 
-        modelRow = new SpinnerNumberModel(1, 1, 5, 1); //(początkowa wartość, minimum, maksimum, krok)
-        modelCol = new SpinnerNumberModel(1, 1, 5, 1);
-        jsRow = new JSpinner(modelRow);
-        jsCol = new JSpinner(modelCol);
-
-        setTable();
+    private void setButtons(){
 
         //definiowanie czcionki przycisków
         font = new Font("Helvetica Neue", Font.BOLD, 12);
@@ -106,7 +128,6 @@ public class Window extends JFrame implements ActionListener  {
         addValue = new JButton("Dodaj", myIcons.iconAdding);
         addValue.addActionListener(this);
         addValue.setFont(font);
-        ;
 
         addZeros = new JButton("Wyzeruj", myIcons.iconZero);
         addZeros.addActionListener(this);
@@ -120,7 +141,9 @@ public class Window extends JFrame implements ActionListener  {
         addSave = new JButton("Zapisz", myIcons.iconSave_Doc);
         addSave.addActionListener(this);
         addSave.setFont(font);
+    }
 
+    private void setCalcPanel(){
         calcPanel = new JPanel(new GridLayout(1, 4));
         JLabel obliczenia = new JLabel("Obliczenia:");
         String[] operacje = {"Wybierz operację", "Dodawanie", "Min", "Max", "Średnia"};
@@ -137,12 +160,11 @@ public class Window extends JFrame implements ActionListener  {
         calcPanel.add(comboBox);
         calcPanel.add(calcBtn);
         calcPanel.add(pustyLabel);
+    }
 
-
+    private void setResultArea(){
         resultArea = new JTextArea();
         resultArea.setEditable(false);
-
-
 
         resultScroll = new JScrollPane(resultArea);
         resultScroll.setViewportView(resultArea); // Ustawienie widoku na JTextArea
@@ -156,40 +178,60 @@ public class Window extends JFrame implements ActionListener  {
         resultScroll.setBorder(titledBorder);
     }
 
-    private JPanel createCenterPanel() {
-        JPanel jp = new JPanel();
-        FormLayout formLayout = new FormLayout(
-                //1     2     3      4         5       6     7      8      9     10    11     12     13    14
-                "5dlu, pref, 2dlu, 50dlu, 10dlu:grow, pref, 3dlu, 40dlu, 20dlu, 10dlu, pref, 3dlu, 40dlu, 5dlu",
-                "5dlu, pref, 10dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 5dlu, 5dlu, pref, 10dlu, pref:grow, 8dlu , 5dlu");
-        //1     2     3      4     5      6    7     8     9     10    11    12    13    14       15       16     17
 
+
+    private JPanel createCenterPanel() {
+        // Tworzenie nowego panelu
+        JPanel jp = new JPanel();
+
+        // Definiowanie układu formy z kolumnami i wierszami o określonych odstępach i szerokościach
+        FormLayout formLayout = new FormLayout(
+                // Definicja kolumn (1 - 14)
+                // 1     2     3      4         5       6     7      8      9     10    11     12     13    14
+                "5dlu, pref, 2dlu, 50dlu, 10dlu:grow, pref, 3dlu, 40dlu, 20dlu, 10dlu, pref, 3dlu, 40dlu, 5dlu",
+                // Definicja wierszy (1 - 17)
+                // 1     2     3      4     5      6    7     8     9     10    11    12    13    14       15       16     17
+                "5dlu, pref, 10dlu, pref, 3dlu, pref, 3dlu, pref, 3dlu, pref, 5dlu, 5dlu, pref, 10dlu, pref:grow, 8dlu, 5dlu");
+
+        // Ustawienie układu na panelu
         jp.setLayout(formLayout);
 
-
+        // Tworzenie obiektu do zarządzania pozycjonowaniem komponentów w siatce
         CellConstraints cc = new CellConstraints();
+
+        // Dodawanie komponentów do panelu z określonymi pozycjami w układzie
+
+        // Etykieta i pole tekstowe dla wartości
         jp.add(labelValue, cc.xy(2, 2, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(jtfValue, cc.xy(4, 2, CellConstraints.FILL, CellConstraints.FILL));
 
+        // Etykieta i suwak dla wierszy
         jp.add(labelRow, cc.xy(6, 2, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(jsRow, cc.xy(8, 2, CellConstraints.FILL, CellConstraints.FILL));
 
+        // Etykieta i suwak dla kolumn
         jp.add(labelCol, cc.xy(11, 2, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(jsCol, cc.xy(13, 2, CellConstraints.FILL, CellConstraints.FILL));
 
+        // Dodanie tabeli w JScrollPane zajmującej większy obszar
         jp.add(new JScrollPane(table), cc.xywh(2, 4, 8, 7, CellConstraints.FILL, CellConstraints.FILL));
+
+        // Dodanie przycisków do dodawania wartości, zer, wypełnienia i zapisu
         jp.add(addValue, cc.xyw(11, 4, 3, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(addZeros, cc.xyw(11, 6, 3, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(addFill, cc.xyw(11, 8, 3, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(addSave, cc.xyw(11, 10, 3, CellConstraints.FILL, CellConstraints.FILL));
 
+        // Dodanie panelu kalkulacyjnego
         jp.add(calcPanel, cc.xyw(2, 13, 10, CellConstraints.FILL, CellConstraints.FILL));
 
+        // Dodanie JScrollPane dla wyników, zajmującego większy obszar
         jp.add(resultScroll, cc.xyw(2, 15, 12, CellConstraints.FILL, CellConstraints.FILL));
 
-
+        // Zwrócenie skonfigurowanego panelu
         return jp;
     }
+
 
     private JButton createJButtonToolBar(String tooltip, Icon icon) {
         JButton jb = new JButton("", icon);
