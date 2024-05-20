@@ -5,12 +5,19 @@ import com.jgoodies.forms.layout.FormLayout;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 
 public class Window extends JFrame implements ActionListener  {
@@ -24,7 +31,7 @@ public class Window extends JFrame implements ActionListener  {
     private JSlider jsRow;
     private JSlider jsCol;
     private SpinnerNumberModel modelRow, modelCol;
-    protected JTable table;
+    private JTable table;
 
     private JPanel calcPanel;
 
@@ -35,6 +42,7 @@ public class Window extends JFrame implements ActionListener  {
     private Icons myIcons = new Icons();
     private Calculation calculation = new Calculation();
     private Menu myMenu = new Menu(this, myIcons);
+    private AboutWindow aboutWindow = new AboutWindow();
 
 
 
@@ -319,7 +327,8 @@ public class Window extends JFrame implements ActionListener  {
         result = " ";
 
         if (event.getSource() == myMenu.saveMenuItem || event.getSource() == jbtSave || event.getSource() == addSave) {
-            ShowMessageDialog("Zapis", "Plik został zapisany pomyślnie!");
+            saveTableToFile(table);
+
         }
         if (event.getSource() == myMenu.printMenuItem || event.getSource() == jbtPrint) {
             ShowMessageDialog("Drukowanie", "Plik został wydrukowany pomyślnie!");
@@ -328,10 +337,15 @@ public class Window extends JFrame implements ActionListener  {
             closeWindow();
         }
         if (event.getSource() == myMenu.helpMenuItem || event.getSource() == jbtHelpContext) {
-            ShowMessageDialog("Kontekst pomocy", Config.DOCS_INFO);
+//            ShowMessageDialog("Kontekst pomocy", Config.DOCS_INFO);
+            AboutWindow aboutWindow = new AboutWindow(); // Tworzenie okna "Informacje o programie"
+            aboutWindow.setVisible(true);
+
         }
         if (event.getSource() == myMenu.aboutMenuItem || event.getSource() == jbtAbout) {
-            ShowMessageDialog("Informacje o autorze", Config.ABOUT_AUTHOR);
+
+            String ABOUT_AUTHOR = "Wersja: " + Config.VERSION + " \nAutor: " + Config.AUTHOR + "\nKierunek: " + Config.STUDIES_MAJOR + "\nKontakt: " + Config.EMAIL;
+            ShowMessageDialog("Informacje o autorze", ABOUT_AUTHOR);
 
         }
         if (event.getSource() == myMenu.zoominMenuItem) {
@@ -426,5 +440,63 @@ public class Window extends JFrame implements ActionListener  {
         setSize(680, 480);
         setLocationRelativeTo(null);
     }
+
+
+    private static String defaultFilePath = null; // domyślna ścieżka do pliku
+
+    public void saveTableToFile(JTable table) {
+        // Jeśli nie ma domyślnej ścieżki, poproś użytkownika o wybór lokalizacji pliku
+        if (defaultFilePath == null) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Wybierz lokalizację pliku");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Pliki tekstowe (*.txt)", "txt");
+            fileChooser.setFileFilter(filter);
+            int userSelection = fileChooser.showSaveDialog(null);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                defaultFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+            } else {
+                ShowMessageDialog("Zapis", "Anulowano zapis do pliku");
+                return;
+            }
+        }
+
+        try {
+            FileWriter fw = new FileWriter(defaultFilePath);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            TableModel model = table.getModel();
+            int rowCount = model.getRowCount();
+            int colCount = model.getColumnCount();
+
+            // Zapisz nagłówki kolumn
+            for (int i = 0; i < colCount; i++) {
+                bw.write(model.getColumnName(i));
+                if (i < colCount - 1)
+                    bw.write("\t"); // dodajemy tabulator między nagłówkami kolumn
+            }
+            bw.newLine(); // nowa linia po nagłówkach
+
+            // Zapisz dane
+            for (int row = 0; row < rowCount; row++) {
+                for (int col = 0; col < colCount; col++) {
+                    Object value = model.getValueAt(row, col);
+                    // Sprawdź czy wartość jest null, jeśli tak, zapisz pusty ciąg znaków
+                    if (value != null)
+                        bw.write(value.toString());
+                    if (col < colCount - 1)
+                        bw.write("\t"); // dodajemy tabulator między komórkami
+                }
+                bw.newLine(); // nowa linia po zapisaniu wszystkich danych w wierszu
+            }
+
+            bw.close();
+            fw.close();
+            ShowMessageDialog("Zapis", "Plik został zapisany pomyślnie");
+        } catch (IOException e) {
+            ShowMessageDialog("Błąd", "Wystąpił błąd podczas zapisywania do pliku: " + e.getMessage());
+
+        }
+    }
+
 
 }

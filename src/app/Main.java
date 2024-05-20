@@ -13,7 +13,7 @@ public class Main {
         myWindow = new Window();
 
         myWindow.setVisible(true);
-        myWindow.setTitle(Config.APP_NAME);
+        myWindow.setTitle(Config.AUTHOR + " " + Config.STUDENT_ID + " - " + Config.APP_NAME);
         myWindow.setSize(Config.WIDTH_WINDOW, Config.HEIGHT_WINDOW);
         myWindow.setLocationRelativeTo(null);
         myWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
