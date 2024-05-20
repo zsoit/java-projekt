@@ -22,7 +22,6 @@ public class Calculation {
             table.setValueAt(value, rowIndex-1, colIndex-1);
             table.repaint();
 
-
             return "Ustawiono wartość " + value + " w wierszu " + rowIndex + ", kolumnie " + colIndex + "\n";
 
     }

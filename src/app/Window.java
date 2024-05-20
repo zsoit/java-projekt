@@ -7,7 +7,10 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class Window extends JFrame implements ActionListener  {
@@ -52,9 +55,16 @@ public class Window extends JFrame implements ActionListener  {
             myIcons.createIcons();
             createMenus();
             initGUI();
+
+            // Dodaje pasek narzędzi do kontenera głównego (content pane) na północy (górze) okna
             cp.add(createToolBar(), BorderLayout.NORTH);
+
+            // Dodaje panel statusu do kontenera głównego (content pane) na południu (dole) okna
             cp.add(statusPanel, BorderLayout.SOUTH);
+
+           // Dodaje panel centralny do kontenera głównego (content pane) w centrum okna
             cp.add(createCenterPanel(), BorderLayout.CENTER);
+
         } catch (IconException ie) {
             ShowMessageDialog("Błąd: ", "Błąd podczas wczytywania icon");
         } catch (Exception e) {
@@ -118,6 +128,10 @@ public class Window extends JFrame implements ActionListener  {
         labelValue = new JLabel("Wprowadź liczbę", JLabel.LEFT);
         jtfValue = new JTextField("0");
         jtfValue.setHorizontalAlignment(JTextField.RIGHT);
+
+
+
+
     }
 
     private void setButtons(){
@@ -332,11 +346,19 @@ public class Window extends JFrame implements ActionListener  {
             result = calculation.resetTable(table);
         }
         if (event.getSource() == addFill) {
-            int rowIndex = (int) jsRow.getValue();
-            int colIndex = (int) jsCol.getValue();
-            int value = Integer.parseInt(jtfValue.getText());
 
-            result = calculation.setValueTable(rowIndex, colIndex, value, table);
+
+            try {
+                int rowIndex = (int) jsRow.getValue();
+                int colIndex = (int) jsCol.getValue();
+                int value = Integer.parseInt(jtfValue.getText());
+                result = calculation.setValueTable(rowIndex, colIndex, value, table);
+
+            } catch (NumberFormatException ex) {
+               ShowMessageDialog("Błąd", "Proszę wprowadzić poprawną liczbę całkowitą");
+            }
+
+
 
         }
         if (event.getSource() == jbtSigma || event.getSource() == myMenu.addMenuItem || event.getSource() == addValue) {
