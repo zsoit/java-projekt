@@ -359,7 +359,7 @@ public class Window extends JFrame implements ActionListener  {
         if (event.getSource() == addZeros) {
             result = calculation.resetTable(table);
         }
-        if (event.getSource() == addFill) {
+        if (event.getSource() == addValue) {
 
 
             try {
@@ -375,6 +375,19 @@ public class Window extends JFrame implements ActionListener  {
 
 
         }
+
+        if (event.getSource() == addFill){
+            try {
+                int rowIndex = (int) jsRow.getValue();
+                int colIndex = (int) jsCol.getValue();
+                int value = Integer.parseInt(jtfValue.getText());
+                result = calculation.fillTable(table, value);
+
+            } catch (NumberFormatException ex) {
+                ShowMessageDialog("Błąd", "Proszę wprowadzić poprawną liczbę całkowitą");
+            }
+        }
+
         if (event.getSource() == jbtSigma || event.getSource() == myMenu.addMenuItem || event.getSource() == addValue) {
             result =  calculation.additionalElements(table);
         }
@@ -453,7 +466,7 @@ public class Window extends JFrame implements ActionListener  {
             fileChooser.setFileFilter(filter);
             int userSelection = fileChooser.showSaveDialog(null);
             if (userSelection == JFileChooser.APPROVE_OPTION) {
-                defaultFilePath = fileChooser.getSelectedFile().getAbsolutePath();
+                defaultFilePath = fileChooser.getSelectedFile().getAbsolutePath() + ".txt";
             } else {
                 ShowMessageDialog("Zapis", "Anulowano zapis do pliku");
                 return;

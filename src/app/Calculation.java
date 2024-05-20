@@ -14,6 +14,15 @@ public class Calculation {
         return "Zerowanie tablicy \n";
     }
 
+    public String fillTable(JTable table, int myValue) {
+        for (int row = 0; row < table.getRowCount(); row++) {
+            for (int col = 0; col < table.getColumnCount(); col++) {
+                table.setValueAt(myValue, row, col);
+            }
+        }
+        return "Zerowanie tablicy \n";
+    }
+
 
     public String setValueTable(
             int rowIndex, int colIndex, int value, JTable table
