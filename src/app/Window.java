@@ -30,7 +30,7 @@ public class Window extends JFrame implements ActionListener  {
     private Font font;
 
     private Icons myIcons = new Icons();
-    private WindowModel model = new WindowModel();
+    private Calculation calculation = new Calculation();
     private Menu myMenu = new Menu(this, myIcons);
 
 
@@ -329,27 +329,27 @@ public class Window extends JFrame implements ActionListener  {
 
 
         if (event.getSource() == addZeros) {
-            result = model.resetTable(table);
+            result = calculation.resetTable(table);
         }
         if (event.getSource() == addFill) {
             int rowIndex = (int) jsRow.getValue();
             int colIndex = (int) jsCol.getValue();
             int value = Integer.parseInt(jtfValue.getText());
 
-            result = model.setValueTable(rowIndex, colIndex, value, table);
+            result = calculation.setValueTable(rowIndex, colIndex, value, table);
 
         }
         if (event.getSource() == jbtSigma || event.getSource() == myMenu.addMenuItem || event.getSource() == addValue) {
-            result =  model.additionalElements(table);
+            result =  calculation.additionalElements(table);
         }
         if (event.getSource() == jbtMean || event.getSource() == myMenu.meanMenuItem) {
-            result =  model.avgElements(table);
+            result =  calculation.avgElements(table);
         }
         if (event.getSource() == jbtMin || event.getSource() == myMenu.minMenuItem) {
-            result = model.minElements(table);
+            result = calculation.minElements(table);
         }
         if (event.getSource() == jbtMax || event.getSource() == myMenu.maxMenuItem) {
-            result =  model.maxElements(table);
+            result =  calculation.maxElements(table);
         }
 
 
@@ -358,18 +358,18 @@ public class Window extends JFrame implements ActionListener  {
             String selectedOperation = (String) comboBox.getSelectedItem();
             switch (selectedOperation) {
                 case "Dodawanie":
-                    result =  model.additionalElements(table);
+                    result =  calculation.additionalElements(table);
                     break;
                 case "Średnia":
-                    result =  model.avgElements(table);
+                    result =  calculation.avgElements(table);
 
                     break;
                 case "Min":
-                    result =  model.minElements(table);
+                    result =  calculation.minElements(table);
 
                     break;
                 case "Max":
-                    result =  model.maxElements(table);
+                    result =  calculation.maxElements(table);
 
                     break;
                 default:

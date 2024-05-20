@@ -2,7 +2,7 @@ package app;
 
 import javax.swing.*;
 
-public class WindowModel {
+public class Calculation {
 
 
     public String resetTable(JTable table) {
@@ -29,26 +29,26 @@ public class WindowModel {
 
 
     public String additionalElements(JTable table) {
-        int suma = 0;
+        int sum = 0;
         for (int row = 0; row < table.getRowCount(); row++) {
             for (int col = 0; col < table.getColumnCount(); col++) {
-                suma += (int) table.getValueAt(row, col);
+                sum += (int) table.getValueAt(row, col);
             }
         }
 
         
-        return "Suma wszystkich elementów: " + suma + "\n";
+        return "Suma wszystkich elementów: " + sum + "\n";
     }
 
     public String avgElements(JTable table) {
-        int suma = 0;
+        int sum = 0;
         for (int row = 0; row < table.getRowCount(); row++) {
             for (int col = 0; col < table.getColumnCount(); col++) {
-                suma += (int) table.getValueAt(row, col);
+                sum += (int) table.getValueAt(row, col);
             }
         }
         
-        double srednia = (double) suma / (table.getRowCount() * table.getColumnCount());
+        double srednia = (double) sum / (table.getRowCount() * table.getColumnCount());
         return "Średnia wszystkich elementów: " + srednia + "\n";
     }
 
