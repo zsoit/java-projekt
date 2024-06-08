@@ -206,6 +206,7 @@ public class Window extends JFrame implements ActionListener  {
     private void setCalcPanel(){
         JDateChooser kalendarz = setKalendarz();
         JLabel labelKalendarz = new JLabel("Wybierz date: ");
+        JLabel labelKolo = new JLabel("Rozkład wartości w tabeli: ");
         calcPanel = new JPanel(new GridLayout(1, 4));
         JLabel calculation = new JLabel("Obliczenia:");
         String[] operation = {"Wybierz operację", "Dodawanie", "Min", "Max", "Średnia"};
@@ -213,6 +214,8 @@ public class Window extends JFrame implements ActionListener  {
         comboBox.setSelectedIndex(0); // Ustawienie domyślnego tekstu
         comboBox.setBounds(50, 30, 100, 30);
         JLabel emptyLabel = new JLabel();
+        JLabel emptyLabel1 = new JLabel();
+
 
         calcBtn = new JButton("Oblicz");
         calcBtn.addActionListener(this);
@@ -224,6 +227,8 @@ public class Window extends JFrame implements ActionListener  {
         calcPanel.add(emptyLabel);
         calcPanel.add(labelKalendarz);
         calcPanel.add(kalendarz);
+        calcPanel.add(emptyLabel1);
+        calcPanel.add(labelKolo);
 
     }
 
