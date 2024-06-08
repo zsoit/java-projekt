@@ -12,8 +12,8 @@ public class Config {
     public static String EMAIL = "u20019@s.tu.koszaln.pl";
     public static String STUDIES_MAJOR = "IV Semestr Informatyka";
 
-    public static  int WIDTH_WINDOW = 800;
-    public static  int HEIGHT_WINDOW = 480;
+    public static  int WIDTH_WINDOW = 1000;
+    public static  int HEIGHT_WINDOW = 690;
 
 //    public static String DOCS_INFO;
 //

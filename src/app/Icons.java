@@ -5,10 +5,7 @@ import java.net.URL;
 
 public class Icons {
 
-
-
     private static final String ICON_PATH = "/icons/";
-
 
     public Icon mIconSave, mIconPrint, iconExit, mIconExit, iconAbout, mIconAbout, iconHelp, mIconHelp, mIconUndo, mIconRedo, mIconZoomIn, mIconZoomOut, mIconAdd, mIconMean, mIconMin, mIconMax, iconSave, iconPrint, iconSigma, iconMean, iconMin, iconMax;
     public Icon iconAdding, iconZero, iconFill, iconSave_Doc;

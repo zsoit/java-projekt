@@ -2,7 +2,6 @@ package app;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -25,6 +24,8 @@ import java.time.LocalDate;
 import java.util.Date;
 
 
+
+
 public class Window extends JFrame implements ActionListener  {
 
 
@@ -41,7 +42,7 @@ public class Window extends JFrame implements ActionListener  {
 
     private JPanel calcPanel;
 
-    protected JTextArea resultArea;
+    public JTextArea resultArea;
     private JScrollPane resultScroll;
     private Font font;
 
@@ -49,7 +50,6 @@ public class Window extends JFrame implements ActionListener  {
     private Calculation calculation = new Calculation();
     private Menu myMenu = new Menu(this, myIcons);
     private AboutWindow aboutWindow = new AboutWindow();
-
 
 
     public Window() {
@@ -79,12 +79,16 @@ public class Window extends JFrame implements ActionListener  {
 
            // Dodaje panel centralny do kontenera głównego (content pane) w centrum okna
             cp.add(createCenterPanel(), BorderLayout.CENTER);
+//            SwingUtilities.invokeLater(()-> dailyTips.showTips(this));
+
+
 
         } catch (IconException ie) {
-            ShowMessageDialog("Błąd: ", "Błąd podczas wczytywania icon");
+            ShowErrorMessage("Błąd: ", "Błąd podczas wczytywania icon");
+
         } catch (Exception e) {
             e.printStackTrace();
-            ShowMessageDialog("Błąd: ", "Błąd podczas tworzenia GUI");
+            ShowErrorMessage("Błąd: ", "Błąd podczas tworzenia GUI");
         }
     }
 
@@ -193,9 +197,9 @@ public class Window extends JFrame implements ActionListener  {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = dateFormat.format(dataCurrent);
 
-                // wyswitlenie daty
-                String result =  "Data - " + dateString + "\n ";
-                resultArea.append(result);
+                // wyswitlenie daty w JTextArea
+                resultAreaPrint("Data - " + dateString + "\n ");
+
 
             }
         });
@@ -203,16 +207,24 @@ public class Window extends JFrame implements ActionListener  {
         return kalendarz;
     }
 
+
     private void setCalcPanel(){
+        Calendar calendar = new Calendar();
+
         JDateChooser kalendarz = setKalendarz();
+
+
         JLabel labelKalendarz = new JLabel("Wybierz date: ");
+
         JLabel labelKolo = new JLabel("Rozkład wartości w tabeli: ");
         calcPanel = new JPanel(new GridLayout(1, 4));
         JLabel calculation = new JLabel("Obliczenia:");
         String[] operation = {"Wybierz operację", "Dodawanie", "Min", "Max", "Średnia"};
+
         JComboBox<String> comboBox = new JComboBox<>(operation);
         comboBox.setSelectedIndex(0); // Ustawienie domyślnego tekstu
         comboBox.setBounds(50, 30, 100, 30);
+
         JLabel emptyLabel = new JLabel();
         JLabel emptyLabel1 = new JLabel();
 
@@ -231,8 +243,6 @@ public class Window extends JFrame implements ActionListener  {
         calcPanel.add(labelKolo);
 
     }
-
-
 
     private void setResultArea(){
         resultArea = new JTextArea();
@@ -354,6 +364,8 @@ public class Window extends JFrame implements ActionListener  {
         return jbt;
     }
 
+
+
     public void closeWindow() {
         // utworzenie okna dialogowego z zapytanie o zamkniecie projektu
         int value = JOptionPane.showOptionDialog(
@@ -371,8 +383,6 @@ public class Window extends JFrame implements ActionListener  {
             System.exit(0);
         }
     }
-
-
 
 
     @Override
@@ -444,7 +454,7 @@ public class Window extends JFrame implements ActionListener  {
             }
         }
 
-        if (event.getSource() == jbtSigma || event.getSource() == myMenu.addMenuItem || event.getSource() == addValue) {
+        if (event.getSource() == jbtSigma || event.getSource() == myMenu.addMenuItem) {
             result =  calculation.additionalElements(table);
         }
         if (event.getSource() == jbtMean || event.getSource() == myMenu.meanMenuItem) {
@@ -487,11 +497,11 @@ public class Window extends JFrame implements ActionListener  {
         }
 
 
-        resultAreaAlert(result);
+        resultAreaPrint(result);
 
     }
 
-    protected void resultAreaAlert(String desc){
+    protected void resultAreaPrint(String desc){
         resultArea.append(desc);
     }
 
@@ -499,8 +509,12 @@ public class Window extends JFrame implements ActionListener  {
         JOptionPane.showMessageDialog(this,  title2,  title1, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    private void ShowErrorMessage(String title1, String title2){
+        JOptionPane.showMessageDialog(this,  title2,  title1, JOptionPane.ERROR_MESSAGE);
 
-  protected void zoomIn() {
+    }
+
+    protected void zoomIn() {
         setSize(900, 650);
         setLocationRelativeTo(null);
     }

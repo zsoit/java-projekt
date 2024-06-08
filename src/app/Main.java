@@ -18,6 +18,10 @@ public class Main {
         myWindow.setLocationRelativeTo(null);
         myWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
+        // Wyświetlenie okienka z podpowiedziami
+        Tips tips = new Tips();
+        tips.showTips();
+
 
     }
 }
