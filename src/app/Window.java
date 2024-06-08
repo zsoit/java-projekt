@@ -209,7 +209,6 @@ public class Window extends JFrame implements ActionListener  {
 
 
     private void setCalcPanel(){
-        Calendar calendar = new Calendar();
 
         JDateChooser kalendarz = setKalendarz();
 
