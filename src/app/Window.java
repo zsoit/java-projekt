@@ -2,6 +2,8 @@ package app;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -13,14 +15,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 public class Window extends JFrame implements ActionListener  {
+
 
     private  JButton jbtExit, jbtAbout, jbtHelpContext, jbtSave, jbtPrint, jbtSigma, jbtMean, jbtMin, jbtMax;
     private  JButton addValue, addZeros, addFill, addSave, calcBtn;
@@ -47,6 +53,7 @@ public class Window extends JFrame implements ActionListener  {
 
 
     public Window() {
+
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -87,12 +94,15 @@ public class Window extends JFrame implements ActionListener  {
         setTextField();
         setSlider();
         setTable();
+        calculation.resetTable(table);
         setButtons();
         setCalcPanel();
         setResultArea();
     }
 
     private void setTable(){
+
+
         table = new JTable(5, 5);
         table.setEnabled(false);
         table.setRowHeight(table.getRowHeight() + 11);
@@ -100,15 +110,24 @@ public class Window extends JFrame implements ActionListener  {
         table.getTableHeader().setReorderingAllowed(false);
         table.getTableHeader().setResizingAllowed(false);
 
+
         // Wyśrodkowanie tytułów kolumn znajdujących się na górze tabeli
+        // Pobiera domyślny renderer dla nagłówków kolumn, rzutuje go na typ DefaultTableCellRenderer i ustawia wyrównanie poziome na środek.
         ((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
 
         // Ustawienie renderera komórek dla danych
+        // Tworzy nowy renderer dla komórek tabeli
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+
+        // Ustawia wyrównanie poziome zawartości komórek na prawą stronę
         rightRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        // Ustawia rightRenderer jako domyślny renderer dla wszystkich komórek zawierających obiekty typu Object
         table.setDefaultRenderer(Object.class, rightRenderer);
 
         new JScrollPane(table);
+
+
 
 
     }
@@ -136,10 +155,6 @@ public class Window extends JFrame implements ActionListener  {
         labelValue = new JLabel("Wprowadź liczbę", JLabel.LEFT);
         jtfValue = new JTextField("0");
         jtfValue.setHorizontalAlignment(JTextField.RIGHT);
-
-
-
-
     }
 
     private void setButtons(){
@@ -165,24 +180,54 @@ public class Window extends JFrame implements ActionListener  {
         addSave.setFont(font);
     }
 
+    private JDateChooser setKalendarz(){
+        JDateChooser kalendarz = new JDateChooser();
+        kalendarz.setDateFormatString("yyyy-MM-dd");
+        Date test = java.sql.Date.valueOf(LocalDate.now());
+
+        kalendarz.setDate(test);
+        kalendarz.addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt){
+                Date dataCurrent = kalendarz.getDate();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String dateString = dateFormat.format(dataCurrent);
+
+                // wyswitlenie daty
+                String result =  "Data - " + dateString + "\n ";
+                resultArea.append(result);
+
+            }
+        });
+
+        return kalendarz;
+    }
+
     private void setCalcPanel(){
+        JDateChooser kalendarz = setKalendarz();
+        JLabel labelKalendarz = new JLabel("Wybierz date: ");
         calcPanel = new JPanel(new GridLayout(1, 4));
-        JLabel obliczenia = new JLabel("Obliczenia:");
-        String[] operacje = {"Wybierz operację", "Dodawanie", "Min", "Max", "Średnia"};
-        JComboBox<String> comboBox = new JComboBox<>(operacje);
+        JLabel calculation = new JLabel("Obliczenia:");
+        String[] operation = {"Wybierz operację", "Dodawanie", "Min", "Max", "Średnia"};
+        JComboBox<String> comboBox = new JComboBox<>(operation);
         comboBox.setSelectedIndex(0); // Ustawienie domyślnego tekstu
-        comboBox.setBounds(50, 30, 200, 30);
-        JLabel pustyLabel = new JLabel();
+        comboBox.setBounds(50, 30, 100, 30);
+        JLabel emptyLabel = new JLabel();
 
         calcBtn = new JButton("Oblicz");
         calcBtn.addActionListener(this);
 
 
-        calcPanel.add(obliczenia);
+        calcPanel.add(calculation);
         calcPanel.add(comboBox);
         calcPanel.add(calcBtn);
-        calcPanel.add(pustyLabel);
+        calcPanel.add(emptyLabel);
+        calcPanel.add(labelKalendarz);
+        calcPanel.add(kalendarz);
+
     }
+
+
 
     private void setResultArea(){
         resultArea = new JTextArea();
@@ -200,9 +245,10 @@ public class Window extends JFrame implements ActionListener  {
         resultScroll.setBorder(titledBorder);
     }
 
-
-
     private JPanel createCenterPanel() {
+
+
+
         // Tworzenie nowego panelu
         JPanel jp = new JPanel();
 
@@ -227,6 +273,7 @@ public class Window extends JFrame implements ActionListener  {
         jp.add(labelValue, cc.xy(2, 2, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(jtfValue, cc.xy(4, 2, CellConstraints.FILL, CellConstraints.FILL));
 
+
         // Etykieta i suwak dla wierszy
         jp.add(labelRow, cc.xy(6, 2, CellConstraints.FILL, CellConstraints.FILL));
         jp.add(jsRow, cc.xy(8, 2, CellConstraints.FILL, CellConstraints.FILL));
@@ -247,8 +294,12 @@ public class Window extends JFrame implements ActionListener  {
         // Dodanie panelu kalkulacyjnego
         jp.add(calcPanel, cc.xyw(2, 13, 10, CellConstraints.FILL, CellConstraints.FILL));
 
+
         // Dodanie JScrollPane dla wyników, zajmującego większy obszar
         jp.add(resultScroll, cc.xyw(2, 15, 12, CellConstraints.FILL, CellConstraints.FILL));
+
+        jp.add(resultScroll, cc.xyw(2, 15, 12, CellConstraints.FILL, CellConstraints.FILL));
+
 
         // Zwrócenie skonfigurowanego panelu
         return jp;

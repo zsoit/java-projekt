@@ -81,6 +81,8 @@ public class Calculation {
         }
         return "Wartość maksymalna: " + max + "\n";
     }
+
+
 }
 
 
