@@ -1,0 +1,150 @@
+﻿<HTML>
+   <HEAD>
+      <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+      <META HTTP-EQUIV="Creation-date" CONTENT="2010.12.15">
+      <META NAME="description" CONTENT="Opis programu">
+      <META NAME="author" CONTENT="Windorpski Jacek">	
+      <TITLE>MyWindow - Zadanie 2</TITLE>
+   </HEAD>
+   <BODY background="tlo.jpg">
+      
+      <CENTER><IMG SRC="header.jpg"></CENTER>
+      <TABLE WIDTH="100%">
+      	<TR>
+      		<TD ALIGN="left"><FONT COLOR="#909090">Copyright &copy 2024 by
+      		JAKUB ACHTELIK U20019@S.TU.KOSZALIN.PL</FONT>
+      		</TD>
+      		<TD ALIGN="right" WIDTH="90"><FONT COLOR="#909090">WEII PK</FONT>
+      		</TD>
+      	</TR>
+      </TABLE>
+      <HR  WIDTH="100%" />
+
+         <A HREF="#Etykieta1">Wprowadzenie</A> |
+         <H1>Zadanie 2 – Komponenty graficzne i archiwa JAR  Aplikację  z  zadania  pierwszego  należy  uzupełnić  o  następujące  komponenty
+         graficzne oraz wymagane biblioteki:</H1>
+
+      <br><BR> 1. Zmodyfikować  tabelę  (JTable)  i  listę  (JList,  JComboBox)  z  zadania  pierwszego  do
+         modelu MVC (Model-View-Controler)
+
+      <br><BR>2. W  zależności  od  numeru  indeksu  utworzyć  panel  nawigacyjny  z  wykorzystaniem
+         odpowiedniego komponentu:
+         <UL>
+            <LI>a. JTaskPane – numer indeksu kończący się na 0,1,2 lub 3,</LI>
+            <LI>b. JButtonBar - numer indeksu kończący się na 4,5 lub 6,</LI>
+            <LI><B>c. JOutlookBar - numer indeksu kończący się na 7, 8 lub 9</B></LI>
+         </UL>
+
+
+      <br> <BR> 3. W  oparciu  o  bibliotekę  jcalendar.jar  utworzyć  w panelu centralnym kalendarz
+         w  postaci  obiektu  JCalendarCombo  z  określonym  formatem  daty  na  „rrrrr-mm-dd”.
+         Każdy wybór daty i jej postać zapisywać w przestrzeni tekstowej (JAreaText)
+      <br> <BR> 4. W  zależności  od  numeru  indeksu  utworzyć  wykres  liczb  zawartych  w  komórkach
+         tabeli z wykorzystaniem biblioteki jfreechart:
+         <UL>
+            <LI>a. histogram pionowy – numer indeksu kończący się na 0,1,2 lub 3,</LI>
+            <LI>b. histogram poziomy - numer indeksu kończący się na 4,5 lub 6, </LI>
+            <LI><B>c. wykres kołowy - numer indeksu kończący się na 7, 8 lub 9</B></LI>
+         </UL>
+
+      <br><BR> 5. Zaimplementować  obiekt  reprezentujący  funkcję  „porady  dnia”  (JTipOfTheDay)
+         uruchamianą po starcie aplikacji.
+      <br><BR> 6. Dla wszystkich dodanych w  aplikacji  komponentów  graficznych  oprogramować
+         odpowiednie zdarzenia.
+      <br> <BR> 7. Uzupełnić strukturę projektu o następujące biblioteki:
+         <ul>
+            <li>a. l2fprod-common-xxx.jar  - gdzie xxx określa nazwę biblioteki zawierającej
+               komponent nawigacyjny i komponent z poradą dnia.</li>
+            <li>b. jcalendar.jar – biblioteka zawierająca graficzny komponent kalendarza,</li>
+            <li><b>c. Jfreechart – biblioteka zawierająca zbiór komponentów do wykresów.</b></li>
+         </ul>
+
+      <BR>
+
+      <h1>Zadanie 3 – Dziennik zdarzeń i Javadoc  Aplikację z  zadania  drugiego  należy rozszerzyć  o  funkcję dziennika zdarzeń
+         tzw.  log  oraz  odpowiedni  opis  zmiennych,  metod  i  klas  pozwalających  na
+         wygenerowanie dokumentacji Javadoc.</h1>
+      1. Uzupełnić  strukturę  projektu  o  bibliotekę  log4j  umożliwiającą  realizację  dziennika
+      zdarzeń.
+      <br> <br>
+      2. Utworzyć  plik  konfiguracyjny  dziennika  zdarzeń  w postaci XML zawierający
+      odpowiednie obiekty  Appender, Logger i Layout o następujących właściwościach:
+      <ul>
+         <li>a. Miejsce docelowe komunikatu ustawić na konsolę oraz plik </li>
+         <li>b. Poziom komunikatu określić na INFO LEVEL </li>
+         <li> c. Określić  format  komunikatu  zawierający  wyrównany  do  lewej  tekst  wraz z  priorytetem  komunikatu,  datą i czasem zdarzenia,  nazwą pliku wywołania
+            komunikatu, numerem linii wywołania, treścią komunikatu i znakiem  nowego
+            wiersza.</li>
+      </ul>
+
+      <br> <br>
+      3. Wykorzystując bibliotekę itextpdf dodać funkcję wyeksportowania danych z tabeli do
+      pliku w formacie PDF.
+      <br> <br>
+      4. Opisać  w  odpowiednim  formacie  komentarze  dotyczące  globalnych  zmiennych,
+      metod, interfejsów i klas w celu wygenerowania dokumentacji. Zamieścić dane autora,
+      numer wersji i datę wykonania.
+      <br> <br>
+      5. Korzystając  z  narzędzia  Javadoc  wygenerować  dokumentację  kodu  źródłowego
+      i zapisać ją w katalogu doc struktury projektu
+
+      <TABLE WIDTH="100%" CELLSPACING="0" CELLPADING="0">
+         <TR><TD>
+           <FONT FACE="Arial Narrow" COLOR="#DD4900" SIZE="+1">
+              <SPAN><STRONG>
+                 <A NAME="Etykieta1">WPROWADZENIE</A>
+              </STRONG></SPAN>
+           </FONT>
+         </TD></TR>
+         <TR><TD><IMG SRC="red_line.png"></TD></TR>
+      </TABLE>
+      <BR>
+     
+      <BR><BR>
+      <TABLE WIDTH="100%" CELLSPACING="0" CELLPADING="0">
+         <TR><TD>
+           <FONT FACE="Arial Narrow" COLOR="#DD4900" SIZE="+1">
+              <SPAN><STRONG>
+                 <A NAME="Etykieta2">SPECYFIKACJA</A>
+              </STRONG></SPAN>
+           </FONT>
+         </TD></TR>
+         <TR><TD><IMG SRC="red_line.png"></TD></TR>
+      </TABLE>
+      <BR>
+      
+      <BR><BR>
+      <TABLE WIDTH="100%" CELLSPACING="0" CELLPADING="0">
+         <TR><TD>
+           <FONT FACE="Arial Narrow" COLOR="#DD4900" SIZE="+1">
+              <SPAN><STRONG>
+                 <A NAME="Etykieta3">CHARAKTERYSTYKA PROGRAMU</A>
+              </STRONG></SPAN>
+           </FONT>
+         </TD></TR>
+         <TR><TD><IMG SRC="red_line.png"></TD></TR>
+      </TABLE>
+      <BR>
+	  
+      <BR><BR>
+      <TABLE WIDTH="100%" CELLSPACING="0" CELLPADING="0">
+         <TR><TD>
+           <FONT FACE="Arial Narrow" COLOR="#DD4900" SIZE="+1">
+              <SPAN><STRONG>
+                 <A NAME="Etykieta5">FUNKCJE PROGRAMU</A>
+              </STRONG></SPAN>
+           </FONT>
+         </TD></TR>
+         <TR><TD><IMG SRC="red_line.png"></TD></TR>
+      </TABLE>
+      <BR>
+      <BR><BR>     
+      <HR ALIGN="left" WIDTH="100%" />	
+      <CENTER>
+         <A HREF="#Etykieta1">Wprowadzenie</A> |
+         <A HREF="#Etykieta2">Specyfikacja</A> |
+         <A HREF="#Etykieta4">Charakterystyka programu</A> |
+         <A HREF="#Etykieta5">Funkcje programu</A>
+      </CENTER>    
+   </BODY>
+</HTML>

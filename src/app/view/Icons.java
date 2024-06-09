@@ -1,4 +1,6 @@
-package app;
+package app.view;
+
+import app.model.IconException;
 
 import javax.swing.*;
 import java.net.URL;

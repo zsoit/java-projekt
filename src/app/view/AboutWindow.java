@@ -1,4 +1,6 @@
-package app;
+package app.view;
+import app.Config;
+
 import java.awt.*;
 import java.awt.event.*;
 

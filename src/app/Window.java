@@ -1,5 +1,12 @@
 package app;
 
+import app.model.Calculation;
+import app.model.IconException;
+import app.view.*;
+import app.view.Menu;
+import app.view.HelpWindow;
+
+
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
@@ -48,13 +55,21 @@ public class Window extends JFrame implements ActionListener  {
 
     private Icons myIcons = new Icons();
     private Calculation calculation = new Calculation();
-    private Menu myMenu = new Menu(this, myIcons);
+    private app.view.Menu myMenu = new Menu(this, myIcons);
     private AboutWindow aboutWindow = new AboutWindow();
 
 
+    public void WindowMainSetup(){
+        setVisible(true);
+        setTitle(Config.AUTHOR + " " + Config.STUDENT_ID + " - " + Config.APP_NAME);
+        setSize(Config.WIDTH_WINDOW, Config.HEIGHT_WINDOW);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    }
+
     public Window() {
 
-
+        //WindowMainSetup();
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -79,7 +94,6 @@ public class Window extends JFrame implements ActionListener  {
 
            // Dodaje panel centralny do kontenera głównego (content pane) w centrum okna
             cp.add(createCenterPanel(), BorderLayout.CENTER);
-//            SwingUtilities.invokeLater(()-> dailyTips.showTips(this));
 
 
 
@@ -110,7 +124,14 @@ public class Window extends JFrame implements ActionListener  {
         table = new JTable(5, 5);
         table.setEnabled(false);
         table.setRowHeight(table.getRowHeight() + 11);
-        table.setBackground(new Color(211, 211, 211));
+        //table.setBackground(new Color(211, 211, 211));
+
+        // Ustawianie koloru tła i koloru czcionki
+        table.setBackground(Color.WHITE);
+        table.setForeground(Color.BLACK);
+        table.setSelectionBackground(Color.LIGHT_GRAY);
+        table.setSelectionForeground(Color.BLACK);
+
         table.getTableHeader().setReorderingAllowed(false);
         table.getTableHeader().setResizingAllowed(false);
 
@@ -188,8 +209,8 @@ public class Window extends JFrame implements ActionListener  {
         JDateChooser kalendarz = new JDateChooser();
         kalendarz.setDateFormatString("yyyy-MM-dd");
         Date test = java.sql.Date.valueOf(LocalDate.now());
-
         kalendarz.setDate(test);
+
         kalendarz.addPropertyChangeListener("date", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt){
@@ -198,7 +219,7 @@ public class Window extends JFrame implements ActionListener  {
                 String dateString = dateFormat.format(dataCurrent);
 
                 // wyswitlenie daty w JTextArea
-                resultAreaPrint("Data - " + dateString + "\n ");
+                resultAreaPrint(" Data - " + dateString + "\n ");
 
 
             }
@@ -320,6 +341,7 @@ public class Window extends JFrame implements ActionListener  {
     }
 
 
+
     private JButton createJButtonToolBar(String tooltip, Icon icon) {
         JButton jb = new JButton("", icon);
         jb.setToolTipText(tooltip);
@@ -402,15 +424,18 @@ public class Window extends JFrame implements ActionListener  {
             closeWindow();
         }
         if (event.getSource() == myMenu.helpMenuItem || event.getSource() == jbtHelpContext) {
-//            ShowMessageDialog("Kontekst pomocy", Config.DOCS_INFO);
-            AboutWindow aboutWindow = new AboutWindow(); // Tworzenie okna "Informacje o programie"
-            aboutWindow.setVisible(true);
+            HelpWindow PomocOkno = new HelpWindow();
+            PomocOkno.setVisible(true);
+
+
+
 
         }
         if (event.getSource() == myMenu.aboutMenuItem || event.getSource() == jbtAbout) {
 
-            String ABOUT_AUTHOR = "Wersja: " + Config.VERSION + " \nAutor: " + Config.AUTHOR + "\nKierunek: " + Config.STUDIES_MAJOR + "\nKontakt: " + Config.EMAIL;
-            ShowMessageDialog("Informacje o autorze", ABOUT_AUTHOR);
+            AboutWindow aboutWindow = new AboutWindow(); // Tworzenie okna "Informacje o programie"
+            aboutWindow.setVisible(true);
+
 
         }
         if (event.getSource() == myMenu.zoominMenuItem) {

@@ -1,4 +1,4 @@
-package app;
+package app.model;
 
 import javax.swing.*;
 

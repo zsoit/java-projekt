@@ -1,7 +1,8 @@
 package app;
 
 
-import javax.swing.*;
+import app.view.Tips;
+
 
 public class Main {
 
@@ -9,14 +10,9 @@ public class Main {
     public static void main(String[] args) {
 
 
-        Window myWindow;
-        myWindow = new Window();
-
-        myWindow.setVisible(true);
-        myWindow.setTitle(Config.AUTHOR + " " + Config.STUDENT_ID + " - " + Config.APP_NAME);
-        myWindow.setSize(Config.WIDTH_WINDOW, Config.HEIGHT_WINDOW);
-        myWindow.setLocationRelativeTo(null);
-        myWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        // Wyświetlenie okna
+        Window myWindow = new Window();
+        myWindow.WindowMainSetup();
 
         // Wyświetlenie okienka z podpowiedziami
         Tips tips = new Tips();

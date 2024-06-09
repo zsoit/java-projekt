@@ -1,4 +1,4 @@
-package app;
+package app.view;
 
 import com.l2fprod.common.swing.JTipOfTheDay;
 import com.l2fprod.common.swing.tips.DefaultTip;
