@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 
 public class Menu {
     public JMenu fileMenu, helpMenu, editMenu, viewMenu, calcMenu;
-    public  JMenuItem saveMenuItem, printMenuItem, exitMenuItem, aboutMenuItem, helpMenuItem, undoMenuItem, redoMenuItem, zoominMenuItem, zoomoutMenuItem, addMenuItem, meanMenuItem, minMenuItem, maxMenuItem;
+    public  JMenuItem saveMenuItem, printMenuItem, exitMenuItem, aboutMenuItem, helpMenuItem, undoMenuItem, redoMenuItem, zoominMenuItem, zoomoutMenuItem, addMenuItem, meanMenuItem, minMenuItem, maxMenuItem, piechartMenuitem;
 
     private Icons myIcons;
     private ActionListener listener;
@@ -40,9 +40,11 @@ public class Menu {
         meanMenuItem = createJMenuItem("Średnia", myIcons.mIconMean, shortCuts(KeyEvent.VK_W));
         minMenuItem = createJMenuItem("Min", myIcons.mIconMin, shortCuts(KeyEvent.VK_E));
         maxMenuItem = createJMenuItem("Max", myIcons.mIconMax, shortCuts(KeyEvent.VK_R));
+        piechartMenuitem = createJMenuItem("Wykres kołowy", myIcons.iconPieChart, shortCuts(KeyEvent.VK_T));
         aboutMenuItem = createJMenuItem("O autorze", myIcons.mIconAbout, shortCuts(KeyEvent.VK_A));
         helpMenuItem = createJMenuItem("Kontekst pomocy", myIcons.mIconHelp, shortCuts(KeyEvent.VK_C));
 
+        calcMenu.add(piechartMenuitem);
         fileMenu.add(saveMenuItem);
         fileMenu.add(printMenuItem);
         fileMenu.add(exitMenuItem);

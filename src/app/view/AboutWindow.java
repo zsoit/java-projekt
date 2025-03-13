@@ -71,7 +71,7 @@ public class AboutWindow extends JDialog implements ActionListener {
         l1 = new JLabel("Wersja: " + Config.VERSION);
         l1.setFont(font2);
         l1.setHorizontalAlignment(SwingConstants.CENTER);
-        l2 = new JLabel("Copyright (C) 2024 by");
+        l2 = new JLabel("Copyright (C) 2025 by");
         l2.setFont(font2);
         l2.setHorizontalAlignment(SwingConstants.CENTER);
         l3 = new JLabel(Config.AUTHOR + " " + Config.STUDENT_ID);

@@ -10,7 +10,7 @@ public class Icons {
     private static final String ICON_PATH = "/icons/";
 
     public Icon mIconSave, mIconPrint, iconExit, mIconExit, iconAbout, mIconAbout, iconHelp, mIconHelp, mIconUndo, mIconRedo, mIconZoomIn, mIconZoomOut, mIconAdd, mIconMean, mIconMin, mIconMax, iconSave, iconPrint, iconSigma, iconMean, iconMin, iconMax;
-    public Icon iconAdding, iconZero, iconFill, iconSave_Doc;
+    public Icon iconAdding, iconZero, iconFill, iconSave_Doc, iconPieChart;
 
     public void createIcons() throws IconException {
 
@@ -24,6 +24,7 @@ public class Icons {
         iconMean = createMyIcon("/24x24_toolbar/addition.png");
         iconMin = createMyIcon("/24x24_toolbar/min.png");
         iconMax = createMyIcon("/24x24_toolbar/max.png");
+        iconPieChart = createMyIcon("/24x24_toolbar/pie.png");
 
         // 16x16 dla przyciskow
         iconAdding = createMyIcon("/16x16_btn/add.png");

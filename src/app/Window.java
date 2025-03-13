@@ -3,6 +3,7 @@ package app;
 import app.model.Calculation;
 import app.model.IconException;
 import app.view.*;
+import app.model.*;
 import app.view.Menu;
 import app.view.HelpWindow;
 
@@ -10,9 +11,16 @@ import app.view.HelpWindow;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.toedter.calendar.JDateChooser;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.general.PieDataset;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
@@ -36,7 +44,7 @@ import java.util.Date;
 public class Window extends JFrame implements ActionListener  {
 
 
-    private  JButton jbtExit, jbtAbout, jbtHelpContext, jbtSave, jbtPrint, jbtSigma, jbtMean, jbtMin, jbtMax;
+    private  JButton jbtExit, jbtAbout, jbtHelpContext, jbtSave, jbtPrint, jbtSigma, jbtMean, jbtMin, jbtMax, jbtPieChart;
     private  JButton addValue, addZeros, addFill, addSave, calcBtn;
     private StatusPanel statusPanel;
     
@@ -58,6 +66,10 @@ public class Window extends JFrame implements ActionListener  {
     private app.view.Menu myMenu = new Menu(this, myIcons);
     private AboutWindow aboutWindow = new AboutWindow();
 
+    private PieDataset chartData;
+    private JFreeChart pieChart;
+    private JPanel chartPanel;
+    private DoubleTableModel doubleModel = new DoubleTableModel();
 
     public void WindowMainSetup(){
         setVisible(true);
@@ -116,12 +128,14 @@ public class Window extends JFrame implements ActionListener  {
         setButtons();
         setCalcPanel();
         setResultArea();
+
+
     }
 
     private void setTable(){
 
 
-        table = new JTable(5, 5);
+        table = new JTable(5,5);
         table.setEnabled(false);
         table.setRowHeight(table.getRowHeight() + 11);
         //table.setBackground(new Color(211, 211, 211));
@@ -219,7 +233,7 @@ public class Window extends JFrame implements ActionListener  {
                 String dateString = dateFormat.format(dataCurrent);
 
                 // wyswitlenie daty w JTextArea
-                resultAreaPrint(" Data - " + dateString + "\n ");
+                resultAreaPrint("Data - " + dateString + "\n ");
 
 
             }
@@ -243,7 +257,7 @@ public class Window extends JFrame implements ActionListener  {
 
         JComboBox<String> comboBox = new JComboBox<>(operation);
         comboBox.setSelectedIndex(0); // Ustawienie domyślnego tekstu
-        comboBox.setBounds(50, 30, 100, 30);
+        comboBox.setBounds(50, 30, 80, 30);
 
         JLabel emptyLabel = new JLabel();
         JLabel emptyLabel1 = new JLabel();
@@ -253,6 +267,13 @@ public class Window extends JFrame implements ActionListener  {
         calcBtn.addActionListener(this);
 
 
+
+//        comboBox.setBounds(0, 0, 50, 50);
+        // Ustawienia dla chartPanel
+        //calcPanel.setPreferredSize(new Dimension(100, 100));
+
+
+
         calcPanel.add(calculation);
         calcPanel.add(comboBox);
         calcPanel.add(calcBtn);
@@ -260,7 +281,7 @@ public class Window extends JFrame implements ActionListener  {
         calcPanel.add(labelKalendarz);
         calcPanel.add(kalendarz);
         calcPanel.add(emptyLabel1);
-        calcPanel.add(labelKolo);
+        //calcPanel.add(chartPanel);
 
     }
 
@@ -333,14 +354,13 @@ public class Window extends JFrame implements ActionListener  {
         // Dodanie JScrollPane dla wyników, zajmującego większy obszar
         jp.add(resultScroll, cc.xyw(2, 15, 12, CellConstraints.FILL, CellConstraints.FILL));
 
-        jp.add(resultScroll, cc.xyw(2, 15, 12, CellConstraints.FILL, CellConstraints.FILL));
+
+
 
 
         // Zwrócenie skonfigurowanego panelu
         return jp;
     }
-
-
 
     private JButton createJButtonToolBar(String tooltip, Icon icon) {
         JButton jb = new JButton("", icon);
@@ -368,6 +388,7 @@ public class Window extends JFrame implements ActionListener  {
         jbtMax = createJButtonToolBar("Maximum", myIcons.iconMax);
         jbtHelpContext = createJButtonToolBar("Kontekst pomocy", myIcons.iconHelp);
         jbtAbout = createJButtonToolBar("Informacje o autorze", myIcons.iconAbout);
+        jbtPieChart = createJButtonToolBar("Wykres kołowy", myIcons.iconPieChart);
 
         jbt.add(Box.createHorizontalStrut(5));
         jbt.add(jbtSave);
@@ -381,10 +402,10 @@ public class Window extends JFrame implements ActionListener  {
         jbt.addSeparator();
         jbt.add(jbtHelpContext);
         jbt.add(jbtAbout);
+        jbt.add(jbtPieChart);
 
         return jbt;
     }
-
 
 
     public void closeWindow() {
@@ -423,6 +444,12 @@ public class Window extends JFrame implements ActionListener  {
         if (event.getSource() == myMenu.exitMenuItem || event.getSource() == jbtExit) {
             closeWindow();
         }
+
+        if(event.getSource() == jbtPieChart || event.getSource() == myMenu.piechartMenuitem){
+            PieChartGenerator pieChart = new PieChartGenerator(table);
+            pieChart.showPieChart();
+        }
+
         if (event.getSource() == myMenu.helpMenuItem || event.getSource() == jbtHelpContext) {
             HelpWindow PomocOkno = new HelpWindow();
             PomocOkno.setVisible(true);
@@ -435,7 +462,6 @@ public class Window extends JFrame implements ActionListener  {
 
             AboutWindow aboutWindow = new AboutWindow(); // Tworzenie okna "Informacje o programie"
             aboutWindow.setVisible(true);
-
 
         }
         if (event.getSource() == myMenu.zoominMenuItem) {
@@ -457,9 +483,8 @@ public class Window extends JFrame implements ActionListener  {
                 int colIndex = (int) jsCol.getValue();
                 int value = Integer.parseInt(jtfValue.getText());
                 result = calculation.setValueTable(rowIndex, colIndex, value, table);
-
             } catch (NumberFormatException ex) {
-               ShowMessageDialog("Błąd", "Proszę wprowadzić poprawną liczbę całkowitą");
+                ShowErrorMessage("Błąd", "Proszę wprowadzić poprawną liczbę całkowitą");
             }
 
 
@@ -474,7 +499,7 @@ public class Window extends JFrame implements ActionListener  {
                 result = calculation.fillTable(table, value);
 
             } catch (NumberFormatException ex) {
-                ShowMessageDialog("Błąd", "Proszę wprowadzić poprawną liczbę całkowitą");
+                ShowErrorMessage("Błąd", "Proszę wprowadzić poprawną liczbę całkowitą");
             }
         }
 
@@ -509,7 +534,6 @@ public class Window extends JFrame implements ActionListener  {
                     break;
                 case "Max":
                     result =  calculation.maxElements(table);
-
                     break;
                 default:
                     ShowMessageDialog("Błąd", "Wybierz operację z listy");
@@ -604,6 +628,34 @@ public class Window extends JFrame implements ActionListener  {
 
         }
     }
+
+
+    private PieDataset createDataset() {
+        DefaultPieDataset dataset = new DefaultPieDataset();
+
+        int numberOfColumns = table.getColumnCount(); // Pobierz liczbę kolumn w tabeli
+
+        // Iteruj po wszystkich kolumnach
+        for (int col = 0; col < numberOfColumns; col++) {
+            double sum = table.getRowCount(); // Pobierz sumę dla danej kolumny
+            dataset.setValue("Kolumna " + (col + 1), sum); // Dodaj wartość do zestawu danych
+        }
+
+        return dataset;
+    }
+    private static JFreeChart createChart(PieDataset dataset ) {
+        JFreeChart chart = ChartFactory.createPieChart(
+                "Rozkład wartości w tabeli",   // chart title
+                dataset,          // data
+                false,             // include legend
+                true,
+                false);
+
+        return chart;
+    }
+
+
+
 
 
 }

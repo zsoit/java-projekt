@@ -1,8 +1,39 @@
 package app.model;
 
 import javax.swing.*;
+import java.util.Random;
 
 public class Calculation {
+
+
+
+    public double getColumnSum(JTable table) {
+        int col = table.getSelectedColumn(); // Pobierz indeks wybranej kolumny
+        if (col == -1) {
+            System.out.println("Nie wybrano żadnej kolumny.");
+            return 0; // Zwróć 0, jeśli nie wybrano kolumny
+        }
+
+        double sum = 0;
+        for (int row = 0; row < table.getRowCount(); row++) {
+            sum += Double.parseDouble(table.getValueAt(row, col).toString());
+        }
+        return sum;
+    }
+
+    public double getRowSum(JTable table) {
+        int row = table.getSelectedRow(); // Pobierz indeks wybranego wiersza
+        if (row == -1) {
+            System.out.println("Nie wybrano żadnego wiersza.");
+            return 0; // Zwróć 0, jeśli nie wybrano wiersza
+        }
+
+        double sum = 0;
+        for (int col = 0; col < table.getColumnCount(); col++) {
+            sum += Double.parseDouble(table.getValueAt(row, col).toString());
+        }
+        return sum;
+    }
 
 
     public String resetTable(JTable table) {
@@ -15,12 +46,14 @@ public class Calculation {
     }
 
     public String fillTable(JTable table, int myValue) {
+        Random random = new Random();
         for (int row = 0; row < table.getRowCount(); row++) {
             for (int col = 0; col < table.getColumnCount(); col++) {
-                table.setValueAt(myValue, row, col);
+                int randomNumber = random.nextInt(100); // Zakres od 0 do 99, możesz dostosować według potrzeb
+                table.setValueAt(randomNumber, row, col);
             }
         }
-        return "Zerowanie tablicy \n";
+        return "Wypełnione losowymi liczbami.\n";
     }
 
 
@@ -44,7 +77,7 @@ public class Calculation {
             }
         }
 
-        
+
         return "Suma wszystkich elementów: " + sum + "\n";
     }
 
@@ -55,7 +88,7 @@ public class Calculation {
                 sum += (int) table.getValueAt(row, col);
             }
         }
-        
+
         double srednia = (double) sum / (table.getRowCount() * table.getColumnCount());
         return "Średnia wszystkich elementów: " + srednia + "\n";
     }
