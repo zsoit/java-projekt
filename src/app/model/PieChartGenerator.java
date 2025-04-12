@@ -7,6 +7,7 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class PieChartGenerator {
 
@@ -42,4 +43,6 @@ public class PieChartGenerator {
         frame.setSize(800, 600);
         frame.setVisible(true);
     }
+
+
 }

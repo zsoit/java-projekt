@@ -6,7 +6,9 @@
       <root url="jar://$PROJECT_DIR$/lib/tablelayout.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jcalendar-1.4.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.17-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES />
   </library>
 </component>

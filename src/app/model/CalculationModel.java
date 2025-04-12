@@ -3,39 +3,7 @@ package app.model;
 import javax.swing.*;
 import java.util.Random;
 
-public class Calculation {
-
-
-
-    public double getColumnSum(JTable table) {
-        int col = table.getSelectedColumn(); // Pobierz indeks wybranej kolumny
-        if (col == -1) {
-            System.out.println("Nie wybrano żadnej kolumny.");
-            return 0; // Zwróć 0, jeśli nie wybrano kolumny
-        }
-
-        double sum = 0;
-        for (int row = 0; row < table.getRowCount(); row++) {
-            sum += Double.parseDouble(table.getValueAt(row, col).toString());
-        }
-        return sum;
-    }
-
-    public double getRowSum(JTable table) {
-        int row = table.getSelectedRow(); // Pobierz indeks wybranego wiersza
-        if (row == -1) {
-            System.out.println("Nie wybrano żadnego wiersza.");
-            return 0; // Zwróć 0, jeśli nie wybrano wiersza
-        }
-
-        double sum = 0;
-        for (int col = 0; col < table.getColumnCount(); col++) {
-            sum += Double.parseDouble(table.getValueAt(row, col).toString());
-        }
-        return sum;
-    }
-
-
+public class CalculationModel {
     public String resetTable(JTable table) {
         for (int row = 0; row < table.getRowCount(); row++) {
             for (int col = 0; col < table.getColumnCount(); col++) {

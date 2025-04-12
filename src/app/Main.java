@@ -1,6 +1,7 @@
 package app;
 
 
+import app.controller.WindowController;
 import app.view.Tips;
 
 
@@ -11,8 +12,11 @@ public class Main {
 
 
         // Wyświetlenie okna
-        Window myWindow = new Window();
-        myWindow.WindowMainSetup();
+//        app.Window myWindow = new app.Window();
+//        myWindow.WindowMainSetup();
+
+        WindowController wc = new WindowController();
+        wc.WindowMainSetup();
 
         // Wyświetlenie okienka z podpowiedziami
         Tips tips = new Tips();
